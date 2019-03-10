@@ -33,7 +33,7 @@ def drawCaption(convas, captions, ixtoword, vis_size, off1=2, off2=2):
     # get a font
     
     # fnt = ImageFont.truetype('Pillow/Tests/fonts/FreeMono.ttf', 50)
-    fnt = ImageFont.truetype('Pillow/Tests/fonts/FreeMono.ttf', 50)
+    #fnt = ImageFont.truetype('Pillow/Tests/fonts/FreeMono.ttf', 50)
     fnt = ImageFont.load_default()
     
     # get a drawing context
