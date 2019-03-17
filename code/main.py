@@ -36,14 +36,14 @@ def parse_args():
 def gen_example(wordtoix, algo):
     '''generate images from example sentences'''
     from nltk.tokenize import RegexpTokenizer
-    filepath = '%s/example_filenames.txt' % (cfg.DATA_DIR)
+    filepath = '{}/example_filenames.txt'.format(cfg.DATA_DIR)
     data_dic = {}
     with open(filepath, "r") as f:
         filenames = f.read().split('\n')
         for name in filenames:
             if len(name) == 0:
                 continue
-            filepath = '%s/%s.txt' % (cfg.DATA_DIR, name)
+            filepath = '{}/{}.txt'.format(cfg.DATA_DIR, name)
             with open(filepath, "r") as f:
                 print('Load from:', name)
                 sentences = f.read().split('\n')
@@ -110,8 +110,8 @@ if __name__ == "__main__":
 
     now = datetime.datetime.now(dateutil.tz.tzlocal())
     timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
-    output_dir = '../output/%s_%s_%s' % \
-        (cfg.DATASET_NAME, cfg.CONFIG_NAME, timestamp)
+    output_dir = '../output/{}_{}_{}'.format(cfg.DATASET_NAME, cfg.CONFIG_NAME, timestamp)
+
 
     split_dir, bshuffle = 'train', True
     if not cfg.TRAIN.FLAG:
