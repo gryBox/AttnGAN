@@ -159,6 +159,7 @@ class condGANTrainer(object):
     def save_model(self, netG, avg_param_G, netsD, epoch):
         backup_para = copy_G_params(netG)
         load_params(netG, avg_param_G)
+        print('Saving model to: %s/netG_epoch_%d.pth' % (self.model_dir, epoch) )
         torch.save(netG.state_dict(),
             '%s/netG_epoch_%d.pth' % (self.model_dir, epoch))
         load_params(netG, backup_para)
@@ -322,6 +323,7 @@ class condGANTrainer(object):
                      end_t - start_t))
 
             if epoch % cfg.TRAIN.SNAPSHOT_INTERVAL == 0:  # and epoch != 0:
+                print('Saving model. Epoch: %d' % epoch )
                 self.save_model(netG, avg_param_G, netsD, epoch)
 
         self.save_model(netG, avg_param_G, netsD, self.max_epoch)
@@ -385,6 +387,7 @@ class condGANTrainer(object):
             # the path to save generated images
             s_tmp = model_dir[:model_dir.rfind('.pth')]
             save_dir = '%s/%s' % (s_tmp, split_dir)
+            print('save_dir: %s' % save_dir )
             mkdir_p(save_dir)
 
             cnt = 0
@@ -392,8 +395,8 @@ class condGANTrainer(object):
             for _ in range(1):  # (cfg.TEXT.CAPTIONS_PER_IMAGE):
                 for step, data in enumerate(self.data_loader, 0):
                     cnt += batch_size
-                    if step % 100 == 0:
-                        print('step: ', step)
+                    #if step % 1 == 0:
+                    print('step: ', step)
                     # if step > 50:
                     #     break
 
@@ -416,6 +419,7 @@ class condGANTrainer(object):
                     fake_imgs, _, _, _ = netG(noise, sent_emb, words_embs, mask)
                     for j in range(batch_size):
                         s_tmp = '%s/single/%s' % (save_dir, keys[j])
+                        print('s_tmp fake: %s' % s_tmp )
                         folder = s_tmp[:s_tmp.rfind('/')]
                         if not os.path.isdir(folder):
                             print('Make a new folder: ', folder)
@@ -429,6 +433,7 @@ class condGANTrainer(object):
                         im = np.transpose(im, (1, 2, 0))
                         im = Image.fromarray(im)
                         fullpath = '%s_s%d.png' % (s_tmp, k)
+                        print('fake Saving: %s' % fullpath )
                         im.save(fullpath)
 
     def gen_example(self, data_dic):
@@ -460,6 +465,7 @@ class condGANTrainer(object):
             netG.eval()
             for key in data_dic:
                 save_dir = '%s/%s' % (s_tmp, key)
+                print('save_dir: %s' % ( save_dir ))
                 mkdir_p(save_dir)
                 captions, cap_lens, sorted_indices = data_dic[key]
 
@@ -494,6 +500,7 @@ class condGANTrainer(object):
                     cap_lens_np = cap_lens.cpu().data.numpy()
                     for j in range(batch_size):
                         save_name = '%s/%d_s_%d' % (save_dir, i, sorted_indices[j])
+                        print('fake save_name: %s' % save_name )
                         for k in range(len(fake_imgs)):
                             im = fake_imgs[k][j].data.cpu().numpy()
                             im = (im + 1.0) * 127.5
@@ -503,6 +510,7 @@ class condGANTrainer(object):
                             # print('im', im.shape)
                             im = Image.fromarray(im)
                             fullpath = '%s_g%d.png' % (save_name, k)
+                            print('fake fullpath: %s' % fullpath )
                             im.save(fullpath)
 
                         for k in range(len(attention_maps)):
@@ -520,4 +528,5 @@ class condGANTrainer(object):
                             if img_set is not None:
                                 im = Image.fromarray(img_set)
                                 fullpath = '%s_a%d.png' % (save_name, k)
+                                print('saving: %s' % fullpath )
                                 im.save(fullpath)
