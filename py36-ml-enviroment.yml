@@ -141,7 +141,6 @@ dependencies:
     - cytoolz==0.9.0.1
     - dask==1.1.4
     - easydict==1.9
-    - en-core-web-sm==2.0.0
     - ftfy==4.4.3
     - html5lib==1.0.1
     - ijson==2.3
