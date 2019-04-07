@@ -1,20 +1,20 @@
 CONFIG_NAME: 'DAMSM'
 
-DATASET_NAME: 'photosynthesis-whole'
-DATA_DIR: '../data/photosynthesis-whole'
+DATASET_NAME: 'photosynthesis'
+DATA_DIR: '../data/photosynthesis'
 GPU_ID: 0
 WORKERS: 1
 
 
 TREE:
     BRANCH_NUM: 1
-    BASE_SIZE: 299
+    BASE_SIZE: 7 # Numnber of sets to build training 
 
 
 TRAIN:
     FLAG: True
     NET_E: ''  # '../DAMSMencoders/bird/text_encoder200.pth'
-    BATCH_SIZE: 48
+    BATCH_SIZE: 7
     MAX_EPOCH: 600
     SNAPSHOT_INTERVAL: 50
     ENCODER_LR: 0.002  # 0.0002best; 0.002good; scott: 0.0007 with 0.98decay
@@ -28,4 +28,4 @@ TRAIN:
 
 TEXT:
     EMBEDDING_DIM: 256
-    CAPTIONS_PER_IMAGE: 10
+    CAPTIONS_PER_IMAGE: 1
