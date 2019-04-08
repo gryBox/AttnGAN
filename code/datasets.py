@@ -3,6 +3,11 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
 
 from nltk.tokenize import RegexpTokenizer
 from collections import defaultdict
@@ -111,10 +116,12 @@ class TextDataset(data.Dataset):
         else:
             self.bbox = None
         split_dir = os.path.join(data_dir, split)
+        print("Split Directory: {}".format(split_dir))
 
         self.filenames, self.captions, self.ixtoword, \
             self.wordtoix, self.n_words = self.load_text_data(data_dir, split)
-
+        print("data_dir Directory: {}".format(data_dir))
+        
         self.class_id = self.load_class_id(split_dir, len(self.filenames))
         self.number_example = len(self.filenames)
 
@@ -218,8 +225,15 @@ class TextDataset(data.Dataset):
 
     def load_text_data(self, data_dir, split):
         filepath = os.path.join(data_dir, 'captions.pickle')
+        
         train_names = self.load_filenames(data_dir, 'train')
+        logging.debug("train_names: {}".format(train_names))
+        
+        
         test_names = self.load_filenames(data_dir, 'test')
+        logging.debug("test_names: {}".format(test_names))
+        
+        logging.debug("Check if captions.pickle exists")
         if not os.path.isfile(filepath):
             train_captions = self.load_captions(data_dir, train_names)
             test_captions = self.load_captions(data_dir, test_names)
@@ -231,6 +245,7 @@ class TextDataset(data.Dataset):
                              ixtoword, wordtoix], f, protocol=2)
                 print('Save to: ', filepath)
         else:
+            print("I am here Loading files")
             with open(filepath, 'rb') as f:
                 x = pickle.load(f)
                 train_captions, test_captions = x[0], x[1]
