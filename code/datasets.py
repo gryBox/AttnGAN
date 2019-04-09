@@ -233,7 +233,7 @@ class TextDataset(data.Dataset):
         test_names = self.load_filenames(data_dir, 'test')
         logging.debug("test_names: {}".format(test_names))
         
-        logging.debug("Check if captions.pickle exists")
+        logging.debug("Check if captions.pickle does not exists")
         if not os.path.isfile(filepath):
             train_captions = self.load_captions(data_dir, train_names)
             test_captions = self.load_captions(data_dir, test_names)
@@ -245,7 +245,7 @@ class TextDataset(data.Dataset):
                              ixtoword, wordtoix], f, protocol=2)
                 print('Save to: ', filepath)
         else:
-            print("I am here Loading files")
+            logging.debug("captions.pickle exists")
             with open(filepath, 'rb') as f:
                 x = pickle.load(f)
                 train_captions, test_captions = x[0], x[1]

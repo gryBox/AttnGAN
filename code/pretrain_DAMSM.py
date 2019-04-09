@@ -32,6 +32,11 @@ import torchvision.transforms as transforms
 dir_path = (os.path.abspath(os.path.join(os.path.realpath(__file__), './.')))
 sys.path.append(dir_path)
 
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
 
 UPDATE_INTERVAL = 200
 def parse_args():
@@ -241,7 +246,7 @@ if __name__ == "__main__":
     dataset = TextDataset(cfg.DATA_DIR, 'train',
                           base_size=cfg.TREE.BASE_SIZE,
                           transform=image_transform)
-    print("text dataset type: {}".format(dataset))
+    # print("text dataset type: {}".format(dataset))
  
     print("Number words: {}\nEmbedding Number: {}".format(dataset.n_words, dataset.embeddings_num))
     assert dataset
