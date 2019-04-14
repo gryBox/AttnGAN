@@ -2,6 +2,8 @@ CONFIG_NAME: 'DAMSM'
 
 DATASET_NAME: 'photosynthesis'
 DATA_DIR: '../data/photosynthesis'
+# IMAGE_DIR: 'images'
+# TEXT_DIR: 'text'
 GPU_ID: 0
 WORKERS: 1
 

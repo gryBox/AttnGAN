@@ -3,6 +3,8 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+
+import pathlib
 import logging
 
 logger = logging.getLogger()
@@ -311,6 +313,8 @@ class TextDataset(data.Dataset):
     def __getitem__(self, index):
         #
         key = self.filenames[index]
+        logging.debug("__getitem__ key: {}".format(key))
+        
         cls_id = self.class_id[index]
         #
         if self.bbox is not None:
@@ -319,9 +323,17 @@ class TextDataset(data.Dataset):
         else:
             bbox = None
             data_dir = self.data_dir
-            #data_dir = 
-        #
-        img_name = '%s/images/%s.jpg' % (data_dir, key)
+            logging.debug("Data flpth no bounding boxes: {}".format(data_dir))#data_dir = 
+        
+        #img_name = '%s/images/%s.jpg' % (data_dir, key)
+        ########## Added To get image loader to correct file ########
+        keyPath = pathlib.PosixPath(key)
+        logging.debug("keyPath: {}".format(keyPath))
+        
+        img_name = os.path.join(data_dir, "images", keyPath.stem + ".jpg")
+        
+        ################################################################
+        
         imgs = get_imgs(img_name, self.imsize,
                         bbox, self.transform, normalize=self.norm)
         # random select a sentence
