@@ -316,11 +316,13 @@ class condGANTrainer(object):
                     #                       epoch, name='current')
             end_t = time.time()
 
-            print('''[%d/%d][%d]
-                  Loss_D: %.2f Loss_G: %.2f Time: %.2fs'''
-                  % (epoch, self.max_epoch, self.num_batches,
-                     errD_total.item(), errG_total.item(),
-                     end_t - start_t))
+            ############  Itay commented Out
+            ########## UnboundLocalError: local variable 'errD_total' referenced before assignment
+            # print('''[%d/%d][%d]
+            #       Loss_D: %.2f Loss_G: %.2f Time: %.2fs'''
+            #       % (epoch, self.max_epoch, self.num_batches,
+            #          errD_total.item(), errG_total.item(),
+            #          end_t - start_t))
 
             if epoch % cfg.TRAIN.SNAPSHOT_INTERVAL == 0:  # and epoch != 0:
                 print('Saving model. Epoch: %d' % epoch )

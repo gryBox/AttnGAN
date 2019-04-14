@@ -10,15 +10,15 @@ WORKERS: 1
 
 TREE:
     BRANCH_NUM: 1
-    BASE_SIZE: 7 # Chunks 
+    BASE_SIZE: 5 # Chunks 
 
 
 TRAIN:
     FLAG: True
     NET_E: ''  # '../DAMSMencoders/bird/text_encoder200.pth'
-    BATCH_SIZE: 7
+    BATCH_SIZE: 7 # Changed from 48 - itay (Errors out otherwise)
     MAX_EPOCH: 600
-    SNAPSHOT_INTERVAL: 7 # Changed from 50 - itay
+    SNAPSHOT_INTERVAL: 50 
     ENCODER_LR: 0.002  # 0.0002best; 0.002good; scott: 0.0007 with 0.98decay
     RNN_GRAD_CLIP: 0.25
     SMOOTH:
