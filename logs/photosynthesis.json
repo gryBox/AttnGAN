@@ -44,15 +44,15 @@
         "image_width": 480
     },
     {
-        "image_description": "Photosynthesis - (Infomation + Facts) - Science4Fun",
+        "image_description": "Photosynthesis - Stages, Factors And Importance Of Photosynthesis",
         "image_filename": "5. photosynthesis.png",
         "image_format": "png",
-        "image_height": 767,
-        "image_host": "science4fun.info",
-        "image_link": "http://science4fun.info/wp-content/uploads/2016/01/photosynthesis.png",
-        "image_source": "http://science4fun.info/photosynthesis/",
-        "image_thumbnail_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyz1OblHJ2A1qXnZHrd8O2MaXpCasgXpZz3CqMLvHrwiS-D28S",
-        "image_width": 836
+        "image_height": 565,
+        "image_host": "byjus.com",
+        "image_link": "https://cdn1.byjus.com/wp-content/uploads/2018/11/photosynthesis.png",
+        "image_source": "https://byjus.com/biology/photosynthesis/",
+        "image_thumbnail_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvDDzm35E3hOaqqXrQOJj-vU9qEjOvdnL3IjkKCMQi8qmcXwVuYA",
+        "image_width": 750
     },
     {
         "image_description": "2. 23: Photosynthesis Summary - Biology LibreTexts",
@@ -66,14 +66,14 @@
         "image_width": 800
     },
     {
-        "image_description": "Photosynthesis - Wikipedia",
-        "image_filename": "7. 450px-thylakoid_membrane_3.svg.png",
+        "image_description": "Photosynthesis - (Infomation + Facts) - Science4Fun",
+        "image_filename": "7. photosynthesis.png",
         "image_format": "png",
-        "image_height": 257,
-        "image_host": "en.wikipedia.org",
-        "image_link": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Thylakoid_membrane_3.svg/450px-Thylakoid_membrane_3.svg.png",
-        "image_source": "https://en.wikipedia.org/wiki/Photosynthesis",
-        "image_thumbnail_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpsC5niP5F4o1zgODESPlD1tjPU2p_rbPnlsZToKfp5RKoY-bbAQ",
-        "image_width": 450
+        "image_height": 767,
+        "image_host": "science4fun.info",
+        "image_link": "http://science4fun.info/wp-content/uploads/2016/01/photosynthesis.png",
+        "image_source": "http://science4fun.info/photosynthesis/",
+        "image_thumbnail_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyz1OblHJ2A1qXnZHrd8O2MaXpCasgXpZz3CqMLvHrwiS-D28S",
+        "image_width": 836
     }
 ]

@@ -152,9 +152,11 @@ class TextDataset(data.Dataset):
     def load_captions(self, data_dir, filenames):
         all_captions = []
         for i in range(len(filenames)):
-            cap_path = '%s/text/%s.txt' % (data_dir, filenames[i])
+            #cap_path = '%s/text/%s.txt' % (data_dir, filenames[i])
+            cap_path = '%s/%s.txt' % (data_dir, filenames[i]) #changed
             with open(cap_path, "r") as f:
-                captions = f.read().decode('utf8').split('\n')
+                #captions = f.read().decode('utf8').split('\n')
+                captions = f.read().split('\n') #Canged
                 cnt = 0
                 for cap in captions:
                     if len(cap) == 0:
@@ -224,14 +226,16 @@ class TextDataset(data.Dataset):
                 ixtoword, wordtoix, len(ixtoword)]
 
     def load_text_data(self, data_dir, split):
+        logging.debug("data_dir: {}".format(data_dir))
+        
         filepath = os.path.join(data_dir, 'captions.pickle')
         
         train_names = self.load_filenames(data_dir, 'train')
-        logging.debug("train_names: {}".format(train_names))
+        logging.debug("train_names: {}".format(train_names[2]))
         
         
         test_names = self.load_filenames(data_dir, 'test')
-        logging.debug("test_names: {}".format(test_names))
+        logging.debug("test_names: {}".format(test_names[2]))
         
         logging.debug("Check if captions.pickle does not exists")
         if not os.path.isfile(filepath):
@@ -247,7 +251,10 @@ class TextDataset(data.Dataset):
         else:
             logging.debug("captions.pickle exists")
             with open(filepath, 'rb') as f:
+                
                 x = pickle.load(f)
+                logging.debug("Loading pickle text file names: {}".format(filepath))
+            
                 train_captions, test_captions = x[0], x[1]
                 ixtoword, wordtoix = x[2], x[3]
                 del x
@@ -312,6 +319,7 @@ class TextDataset(data.Dataset):
         else:
             bbox = None
             data_dir = self.data_dir
+            #data_dir = 
         #
         img_name = '%s/images/%s.jpg' % (data_dir, key)
         imgs = get_imgs(img_name, self.imsize,
