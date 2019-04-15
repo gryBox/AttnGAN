@@ -15,7 +15,7 @@ TRAIN:
     NET_G: '../models/photosynthesis_AttnGAN2.pth'
     B_NET_D: False
     BATCH_SIZE: 7 # Default 100
-    NET_E: '../DAMSMencoders/photosynthesis/text_encoder550.pth'
+    NET_E: '../DAMSMencoders/photosynthesis/text_encoder900.pth'
 
 
 GAN:

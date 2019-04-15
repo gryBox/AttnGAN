@@ -17,8 +17,8 @@ TRAIN:
     FLAG: True
     NET_E: ''  # '../DAMSMencoders/bird/text_encoder200.pth'
     BATCH_SIZE: 7 # Changed from 48 - itay (Errors out otherwise)
-    MAX_EPOCH: 600
-    SNAPSHOT_INTERVAL: 50 
+    MAX_EPOCH: 1000
+    SNAPSHOT_INTERVAL: 100
     ENCODER_LR: 0.002  # 0.0002best; 0.002good; scott: 0.0007 with 0.98decay
     RNN_GRAD_CLIP: 0.25
     SMOOTH:
