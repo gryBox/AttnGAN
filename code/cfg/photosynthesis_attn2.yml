@@ -15,12 +15,12 @@ TRAIN:
     NET_G: ''  # '../models/bird_AttnGAN2.pth'
     B_NET_D: True
     BATCH_SIZE: 20  ## 22
-    MAX_EPOCH: 10
-    SNAPSHOT_INTERVAL: 2
+    MAX_EPOCH: 6001
+    SNAPSHOT_INTERVAL: 1000
     DISCRIMINATOR_LR: 0.0002
     GENERATOR_LR: 0.0002
     #
-    NET_E: '../DAMSMencoders/photosynthesis/text_encoder900.pth'
+    NET_E: '../DAMSMencoders/photosynthesis/text_encoder6000.pth'
     SMOOTH:
         GAMMA1: 4.0  # 1,2,5 good 4 best  10&100bad
         GAMMA2: 5.0
@@ -35,5 +35,5 @@ GAN:
     R_NUM: 2
 
 TEXT:
-    EMBEDDING_DIM: 256
+    EMBEDDING_DIM: 1000
     CAPTIONS_PER_IMAGE: 1
