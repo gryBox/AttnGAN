@@ -3,6 +3,6 @@
 # 1. To pretrain a model
 python pretrain_DAMSM.py --cfg cfg/DAMSM/photosynthesis.yml --gpu 0
 
-# 2. Copy an image encoder and text encoder located in one of photosynthesis_DAMSM...
+# 2. Copy an image encoder and text encoder located in one of photosynthesis_DAMSM output directories to the DAMSMencoders file
 image_encoder550.pth
 text_encoder550.pth
