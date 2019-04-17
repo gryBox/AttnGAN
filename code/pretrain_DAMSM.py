@@ -54,15 +54,15 @@ def parse_args():
     # Train arguments
     parser.add_argument('--max_epoch', type=int)
 
-    parser.add_argument('--ENCODER_LR', type=float)
+    parser.add_argument('--encoder_lr', type=float)
 
-    parser.add_argument('--RNN_GRAD_CLIP', type=float)
+    parser.add_argument('--rnn_grad_clip', type=float)
 
-    parser.add_argument('--GAMMA1', type=float)
+    parser.add_argument('--gamma1', type=float)
 
-    parser.add_argument('--GAMMA2', type=float)
+    parser.add_argument('--gamma2', type=float)
 
-    parser.add_argument('--GAMMA3', type=float)
+    parser.add_argument('--gamma3', type=float)
     
     
     
@@ -250,11 +250,11 @@ if __name__ == "__main__":
     if args.max_epoch is not None:
         cfg.TRAIN.MAX_EPOCH = args.max_epoch
     
-    if args.ENCODER_LR is not None:
-        cfg.TRAIN.ENCODER_LR = args.ENCODER_LR
+    if args.encoder_lr is not None:
+        cfg.TRAIN.ENCODER_LR = args.encoder_lr
     
-    if args.RNN_GRAD_CLIP is not None:
-        cfg.TRAIN.RNN_GRAD_CLIP = args.RNN_GRAD_CLIP
+    if args.rnn_grad_clip is not None:
+        cfg.TRAIN.RNN_GRAD_CLIP = args.rnn_grad_clip
     
     if args.gamma1 is not None:
         cfg.TRAIN.SMOOTH.GAMMA1 = args.gamma1
