@@ -49,10 +49,10 @@ def parse_args():
     parser.add_argument('--manualSeed', type=int, help='manual seed',default=123)
     
     # Text arguments
-    parser.add_argument('--EMBEDDING_DIM', type=int)
+    parser.add_argument('--embedding_dim', type=int)
     
     # Train arguments
-    parser.add_argument('--MAX_EPOCH', type=int)
+    parser.add_argument('--max_epoch', type=int)
 
     parser.add_argument('--ENCODER_LR', type=float)
 
@@ -243,12 +243,12 @@ if __name__ == "__main__":
     
     
     # Text arguments
-    if args.EMBEDDING_DIM is not None:
+    if args.embedding_dim is not None:
         cfg.TEXT.EMBEDDING_DIM = args.embedding_dim
     
     # Train arguments
-    if args.MAX_EPOCH is not None:
-        cfg.TRAIN.MAX_EPOCH = args.MAX_EPOCH
+    if args.max_epoch is not None:
+        cfg.TRAIN.MAX_EPOCH = args.max_epoch
     
     if args.ENCODER_LR is not None:
         cfg.TRAIN.ENCODER_LR = args.ENCODER_LR
@@ -256,14 +256,14 @@ if __name__ == "__main__":
     if args.RNN_GRAD_CLIP is not None:
         cfg.TRAIN.RNN_GRAD_CLIP = args.RNN_GRAD_CLIP
     
-    # if args['GAMMA1'] is not None:
-    #     cfg.TRAIN.SMOOTH['GAMMA1'] = args['GAMMA1']
+    if args.gamma1 is not None:
+        cfg.TRAIN.SMOOTH.GAMMA1 = args.gamma1
     
-    # if args['GAMMA2'] is not None:
-    #     cfg.TRAIN.SMOOTH['GAMMA2'] = args['GAMMA2']
+    if args.gamma2 is not None:
+        cfg.TRAIN.SMOOTH.GAMMA2 = args.gamma2
     
-    # if args['GAMMA3'] is not None:
-    #     cfg.TRAIN.SMOOTH['GAMMA3'] = args['GAMMA3']
+    if args.gamma3 is not None:
+        cfg.TRAIN.SMOOTH.GAMMA3 = args.gamma3
     
     
     if not cfg.TRAIN.FLAG:
