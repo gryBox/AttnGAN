@@ -17,3 +17,7 @@ netG_epoch_6000.pth -> photosynthesis_AttnGAN2
 
 # 6. Run Prediction
 python main.py --cfg cfg/eval_photosynthesis.yml --gpu 0
+
+
+##### Paramater search using guildai
+guild run pretrain_DAMSM.py cfg=cfg/DAMSM/photosynthesis.yml gpu=0 max_epoch=[100:10000] --optimizer bayesian --max-trials 100 encoder_lr=[0.0001:0.002] --optimizer bayesian --max-trials 100 rnn_grad_clip=[0.1:1] --optimizer bayesian --max-trials 10 gamma1=[1.0:10] --optimizer bayesian --max-trials 10 gamma2=[1.0:10] --optimizer bayesian --max-trials 10 gamma3=[1.0:100.0] --optimizer bayesian --max-trials 100 embedding_dim=[100:5000] --optimizer bayesian --max-trials 500 words_num=[100:500] --optimizer bayesian --max-trials 100

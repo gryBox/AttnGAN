@@ -1,0 +1,8 @@
+PyYAML
+easydict
+nltk
+numpy
+pandas
+pathlib
+scikit-image
+torchvision

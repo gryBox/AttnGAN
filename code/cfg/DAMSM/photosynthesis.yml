@@ -18,7 +18,7 @@ TRAIN:
     NET_E: ''  # '../DAMSMencoders/bird/text_encoder200.pth'
     BATCH_SIZE: 7 # Changed from 48 - itay (Errors out otherwise)
     MAX_EPOCH: 5
-    SNAPSHOT_INTERVAL: 2
+    SNAPSHOT_INTERVAL: 100
     ENCODER_LR: 0.0002  # 0.0002best; 0.002good; scott: 0.0007 with 0.98decay
     RNN_GRAD_CLIP: 0.25
     SMOOTH:
@@ -31,3 +31,4 @@ TRAIN:
 TEXT:
     EMBEDDING_DIM: 1000
     CAPTIONS_PER_IMAGE: 1
+    WORDS_NUM: 15

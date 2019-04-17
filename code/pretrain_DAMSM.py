@@ -47,27 +47,19 @@ def parse_args():
     parser.add_argument('--gpu', dest='gpu_id', type=int, default=0)
     parser.add_argument('--data_dir', dest='data_dir', type=str, default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed',default=123)
-    
+
     # Text arguments
     parser.add_argument('--embedding_dim', type=int)
+    parser.add_argument('--captions_per_image', type=int)
+    parser.add_argument('--words_num', type=int)
     
     # Train arguments
     parser.add_argument('--max_epoch', type=int)
-
     parser.add_argument('--encoder_lr', type=float)
-
     parser.add_argument('--rnn_grad_clip', type=float)
-
     parser.add_argument('--gamma1', type=float)
-
     parser.add_argument('--gamma2', type=float)
-
     parser.add_argument('--gamma3', type=float)
-    
-    
-    
-    
-    
     args = parser.parse_args()
     return args
 
@@ -125,14 +117,14 @@ def train(dataloader, cnn_model, rnn_model, batch_size,
 
         if step % UPDATE_INTERVAL == 0:
             count = epoch * len(dataloader) + step
-            
+
             # Original
             # s_cur_loss0 = s_total_loss0[0] / UPDATE_INTERVAL
             # s_cur_loss1 = s_total_loss1[0] / UPDATE_INTERVAL
 
             # w_cur_loss0 = w_total_loss0[0] / UPDATE_INTERVAL
             # w_cur_loss1 = w_total_loss1[0] / UPDATE_INTERVAL
-            
+
             # New pytorch
             s_cur_loss0 = s_total_loss0.item() / UPDATE_INTERVAL
             s_cur_loss1 = s_total_loss1.item() / UPDATE_INTERVAL
@@ -240,12 +232,19 @@ if __name__ == "__main__":
         cfg.DATA_DIR = args.data_dir
     print('Using config:')
     pprint.pprint(cfg)
-    
-    
+
+
     # Text arguments
     if args.embedding_dim is not None:
         cfg.TEXT.EMBEDDING_DIM = args.embedding_dim
+        
+    if args.captions_per_image is not None:
+        cfg.TEXT.EMBEDDING_DIM = args.captions_per_image
     
+    if args.words_num is not None:
+        cfg.TEXT.EMBEDDING_DIM = args.words_num
+        
+
     # Train arguments
     if args.max_epoch is not None:
         cfg.TRAIN.MAX_EPOCH = args.max_epoch
@@ -266,6 +265,7 @@ if __name__ == "__main__":
         cfg.TRAIN.SMOOTH.GAMMA3 = args.gamma3
     
     
+
     if not cfg.TRAIN.FLAG:
         args.manualSeed = 100
     elif args.manualSeed is None:
@@ -301,7 +301,7 @@ if __name__ == "__main__":
                           base_size=cfg.TREE.BASE_SIZE,
                           transform=image_transform)
     # print("text dataset type: {}".format(dataset))
- 
+
     print("Number words: {}\nEmbedding Number: {}".format(dataset.n_words, dataset.embeddings_num))
     assert dataset
     dataloader = torch.utils.data.DataLoader(
