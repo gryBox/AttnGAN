@@ -47,10 +47,10 @@ def parse_args():
     parser.add_argument('--gpu', dest='gpu_id', type=int, default=0)
     parser.add_argument('--data_dir', dest='data_dir', type=str, default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed',default=123)
-    
+
     # Text arguments
     parser.add_argument('--EMBEDDING_DIM', type=int)
-    
+
     # Train arguments
     parser.add_argument('--MAX_EPOCH', type=int)
 
@@ -63,11 +63,11 @@ def parse_args():
     parser.add_argument('--GAMMA2', type=float)
 
     parser.add_argument('--GAMMA3', type=float)
-    
-    
-    
-    
-    
+
+
+
+
+
     args = parser.parse_args()
     return args
 
@@ -125,14 +125,14 @@ def train(dataloader, cnn_model, rnn_model, batch_size,
 
         if step % UPDATE_INTERVAL == 0:
             count = epoch * len(dataloader) + step
-            
+
             # Original
             # s_cur_loss0 = s_total_loss0[0] / UPDATE_INTERVAL
             # s_cur_loss1 = s_total_loss1[0] / UPDATE_INTERVAL
 
             # w_cur_loss0 = w_total_loss0[0] / UPDATE_INTERVAL
             # w_cur_loss1 = w_total_loss1[0] / UPDATE_INTERVAL
-            
+
             # New pytorch
             s_cur_loss0 = s_total_loss0.item() / UPDATE_INTERVAL
             s_cur_loss1 = s_total_loss1.item() / UPDATE_INTERVAL
@@ -240,32 +240,32 @@ if __name__ == "__main__":
         cfg.DATA_DIR = args.data_dir
     print('Using config:')
     pprint.pprint(cfg)
-    
-    
+
+
     # Text arguments
     if args.EMBEDDING_DIM is not None:
         cfg.TEXT.EMBEDDING_DIM = args.embedding_dim
-    
+
     # Train arguments
     if args.MAX_EPOCH is not None:
         cfg.TRAIN.MAX_EPOCH = args.MAX_EPOCH
-    
+
     if args.ENCODER_LR is not None:
         cfg.TRAIN.ENCODER_LR = args.ENCODER_LR
-    
+
     if args.RNN_GRAD_CLIP is not None:
         cfg.TRAIN.RNN_GRAD_CLIP = args.RNN_GRAD_CLIP
-    
-    # if args['GAMMA1'] is not None:
-    #     cfg.TRAIN.SMOOTH['GAMMA1'] = args['GAMMA1']
-    
-    # if args['GAMMA2'] is not None:
-    #     cfg.TRAIN.SMOOTH['GAMMA2'] = args['GAMMA2']
-    
-    # if args['GAMMA3'] is not None:
-    #     cfg.TRAIN.SMOOTH['GAMMA3'] = args['GAMMA3']
-    
-    
+
+    if args.GAMMA1 is not None:
+        cfg.TRAIN.SMOOTH['GAMMA1'] = args.GAMMA1
+
+    if args.GAMMA2 is not None:
+        cfg.TRAIN.SMOOTH['GAMMA2'] = args.GAMMA2
+
+    if args.GAMMA3 is not None:
+        cfg.TRAIN.SMOOTH['GAMMA3'] = args.GAMMA3
+
+
     if not cfg.TRAIN.FLAG:
         args.manualSeed = 100
     elif args.manualSeed is None:
@@ -301,7 +301,7 @@ if __name__ == "__main__":
                           base_size=cfg.TREE.BASE_SIZE,
                           transform=image_transform)
     # print("text dataset type: {}".format(dataset))
- 
+
     print("Number words: {}\nEmbedding Number: {}".format(dataset.n_words, dataset.embeddings_num))
     assert dataset
     dataloader = torch.utils.data.DataLoader(

@@ -123,7 +123,7 @@ class TextDataset(data.Dataset):
         self.filenames, self.captions, self.ixtoword, \
             self.wordtoix, self.n_words = self.load_text_data(data_dir, split)
         print("data_dir Directory: {}".format(data_dir))
-        
+
         self.class_id = self.load_class_id(split_dir, len(self.filenames))
         self.number_example = len(self.filenames)
 
@@ -229,15 +229,15 @@ class TextDataset(data.Dataset):
 
     def load_text_data(self, data_dir, split):
         logging.debug("data_dir: {}".format(data_dir))
-        
+
         filepath = os.path.join(data_dir, 'captions.pickle')
-        
+
         train_names = self.load_filenames(data_dir, 'train')
         logging.debug("train_names: {}".format(train_names[2]))
-        
+
         test_names = self.load_filenames(data_dir, 'test')
         logging.debug("test_names: {}".format(test_names[2]))
-        
+
         logging.debug("Check if captions.pickle does not exists")
         if not os.path.isfile(filepath):
             train_captions = self.load_captions(data_dir, train_names)
@@ -252,10 +252,10 @@ class TextDataset(data.Dataset):
         else:
             logging.debug("captions.pickle exists")
             with open(filepath, 'rb') as f:
-                
+
                 x = pickle.load(f)
                 logging.debug("Loading pickle text file names: {}".format(filepath))
-            
+
                 train_captions, test_captions = x[0], x[1]
                 ixtoword, wordtoix = x[2], x[3]
                 del x
@@ -313,7 +313,7 @@ class TextDataset(data.Dataset):
         #
         key = self.filenames[index]
         #logging.debug("__getitem__ key: {}".format(key))
-        
+
         cls_id = self.class_id[index]
         #
         if self.bbox is not None:
@@ -323,16 +323,16 @@ class TextDataset(data.Dataset):
             bbox = None
             data_dir = self.data_dir
             #logging.debug("Data flpth no bounding boxes: {}".format(data_dir))
-        
+
         img_name = '%s/images/%s.jpg' % (data_dir, key)
         ########## Added To get image loader to correct file ########
         # keyPath = pathlib.PosixPath(key)
         # #logging.debug("keyPath: {}".format(keyPath))
-        
+
         # img_name = os.path.join(data_dir, "images", keyPath.stem + ".jpg")
-        
+
         ################################################################
-        
+
         imgs = get_imgs(img_name, self.imsize,
                         bbox, self.transform, normalize=self.norm)
         # random select a sentence

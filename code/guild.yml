@@ -1,0 +1,21 @@
+- model: damsm
+  description: Deep Attentional Multimodal Similarity Model (DAMSM)
+  operations:
+
+    pretrain:
+      description: Pretrain the DAMSM model
+      #main: pretrain_DAMSM --data_dir data/photosynthesis
+      main: pretrain_DAMS_wrapper
+      requires:
+        - file: ../data
+
+    train:
+      description: Train the DAMSM model
+      #main: main
+      exec: echo train
+
+    all:
+      description: Run all steps for building model start to finish
+      steps:
+        - run: pretrain
+        - run: train
