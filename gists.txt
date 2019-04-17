@@ -1,8 +1,19 @@
 # Steps for bulding model start to finish
 
-# 1. To pretrain a model
+# 1. Pretrain a model
 python pretrain_DAMSM.py --cfg cfg/DAMSM/photosynthesis.yml --gpu 0
 
 # 2. Copy an image encoder and text encoder located in one of photosynthesis_DAMSM output directories to the DAMSMencoders file
 image_encoder550.pth
 text_encoder550.pth
+
+# 3. Train Model
+python main.py --cfg cfg/photosynthesis_attn2.yml --gpu 0
+
+# 4. Copy the model from output directory to models and rename
+netG_epoch_6000.pth -> photosynthesis_AttnGAN2
+
+# 5. Change prediction text in data\photosynthesis\example_captions.txt to desired text
+
+# 6. Run Prediction
+python main.py --cfg cfg/eval_photosynthesis.yml --gpu 0

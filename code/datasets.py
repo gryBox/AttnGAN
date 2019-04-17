@@ -154,8 +154,8 @@ class TextDataset(data.Dataset):
     def load_captions(self, data_dir, filenames):
         all_captions = []
         for i in range(len(filenames)):
-            #cap_path = '%s/text/%s.txt' % (data_dir, filenames[i])
-            cap_path = '%s/%s.txt' % (data_dir, filenames[i]) #changed
+            cap_path = '%s/text/%s.txt' % (data_dir, filenames[i])
+            #cap_path = '%s/%s.txt' % (data_dir, filenames[i]) #changed
             with open(cap_path, "r") as f:
                 #captions = f.read().decode('utf8').split('\n')
                 captions = f.read().split('\n') #Canged
@@ -235,7 +235,6 @@ class TextDataset(data.Dataset):
         train_names = self.load_filenames(data_dir, 'train')
         logging.debug("train_names: {}".format(train_names[2]))
         
-        
         test_names = self.load_filenames(data_dir, 'test')
         logging.debug("test_names: {}".format(test_names[2]))
         
@@ -313,7 +312,7 @@ class TextDataset(data.Dataset):
     def __getitem__(self, index):
         #
         key = self.filenames[index]
-        logging.debug("__getitem__ key: {}".format(key))
+        #logging.debug("__getitem__ key: {}".format(key))
         
         cls_id = self.class_id[index]
         #
@@ -323,14 +322,14 @@ class TextDataset(data.Dataset):
         else:
             bbox = None
             data_dir = self.data_dir
-            logging.debug("Data flpth no bounding boxes: {}".format(data_dir))#data_dir = 
+            #logging.debug("Data flpth no bounding boxes: {}".format(data_dir))
         
-        #img_name = '%s/images/%s.jpg' % (data_dir, key)
+        img_name = '%s/images/%s.jpg' % (data_dir, key)
         ########## Added To get image loader to correct file ########
-        keyPath = pathlib.PosixPath(key)
-        #logging.debug("keyPath: {}".format(keyPath))
+        # keyPath = pathlib.PosixPath(key)
+        # #logging.debug("keyPath: {}".format(keyPath))
         
-        img_name = os.path.join(data_dir, "images", keyPath.stem + ".jpg")
+        # img_name = os.path.join(data_dir, "images", keyPath.stem + ".jpg")
         
         ################################################################
         
