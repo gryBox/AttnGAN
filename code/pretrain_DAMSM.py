@@ -75,7 +75,7 @@ def train(dataloader, cnn_model, rnn_model, batch_size,
     count = (epoch + 1) * len(dataloader)
     start_time = time.time()
     for step, data in enumerate(dataloader, 0):
-        # print('step', step)
+        #print('step', data)
         rnn_model.zero_grad()
         cnn_model.zero_grad()
 
@@ -146,9 +146,16 @@ def train(dataloader, cnn_model, rnn_model, batch_size,
             w_total_loss1 = 0
             start_time = time.time()
             # attention Maps
-            img_set, _ = \
-                build_super_images(imgs[-1].cpu(), captions,
-                                   ixtoword, attn_maps, att_sze)
+            # img_set, _ = \
+            #     build_super_images(imgs[-1].cpu(), captions,
+            #                       ixtoword, attn_maps, att_sze)
+            #print(imgs[-1])
+            img_set, _ = build_super_images(imgs[-1].cpu(), 
+                                            captions,
+                                            ixtoword, 
+                                            attn_maps, 
+                                            att_sze)
+            
             if img_set is not None:
                 im = Image.fromarray(img_set)
                 fullpath = '%s/attention_maps%d.png' % (image_dir, step)
@@ -182,9 +189,14 @@ def evaluate(dataloader, cnn_model, rnn_model, batch_size):
 
         if step == 50:
             break
-
-    s_cur_loss = s_total_loss[0] / step
-    w_cur_loss = w_total_loss[0] / step
+    
+    if step!=0:
+        pass
+    else:
+        step = 0.01
+        
+    s_cur_loss = s_total_loss.item() / step
+    w_cur_loss = w_total_loss.item() / step
 
     return s_cur_loss, w_cur_loss
 
@@ -329,6 +341,9 @@ if __name__ == "__main__":
         for epoch in range(start_epoch, cfg.TRAIN.MAX_EPOCH):
             optimizer = optim.Adam(para, lr=lr, betas=(0.5, 0.999))
             epoch_start_time = time.time()
+            # logging.debug(dataloader, image_encoder, text_encoder,
+            #               batch_size, labels, optimizer, epoch,
+            #               dataset.ixtoword, image_dir)
             count = train(dataloader, image_encoder, text_encoder,
                           batch_size, labels, optimizer, epoch,
                           dataset.ixtoword, image_dir)

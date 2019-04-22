@@ -57,13 +57,21 @@ def build_super_images(real_imgs, captions, ixtoword,
                        attn_maps, att_sze, lr_imgs=None,
                        batch_size=cfg.TRAIN.BATCH_SIZE,
                        max_word_num=cfg.TEXT.WORDS_NUM):
-    nvis = 8
+    ###### Hardcoded original                       
+    #nvis = 8
+    ######
+    ###### Hardcoded changed                       
+    nvis = 16
+    ######
     real_imgs = real_imgs[:nvis]
     if lr_imgs is not None:
         lr_imgs = lr_imgs[:nvis]
     if att_sze == 17:
+        print("att_sze equal to 17")
         vis_size = att_sze * 16
+        #vis_size = real_imgs.size(2)
     else:
+        print("att_sze not equal to 17")
         vis_size = real_imgs.size(2)
 
     text_convas = \
@@ -101,7 +109,7 @@ def build_super_images(real_imgs, captions, ixtoword,
     # batch x seq_len x 17 x 17 --> batch x 1 x 17 x 17
     seq_len = max_word_num
     img_set = []
-    num = nvis  # len(attn_maps)
+    num = len(attn_maps)#nvis  # len(attn_maps)
 
     text_map, sentences = \
         drawCaption(text_convas, captions, ixtoword, vis_size)

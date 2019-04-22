@@ -327,7 +327,7 @@ class TextDataset(data.Dataset):
         img_name = '%s/images/%s.jpg' % (data_dir, key)
         ########## Added To get image loader to correct file ########
         # keyPath = pathlib.PosixPath(key)
-        # #logging.debug("keyPath: {}".format(keyPath))
+        # # #logging.debug("keyPath: {}".format(keyPath))
 
         # img_name = os.path.join(data_dir, "images", keyPath.stem + ".jpg")
 
