@@ -14,17 +14,17 @@ TRAIN:
     FLAG: False
     NET_G: '../models/photosynthesis_AttnGAN2.pth'
     B_NET_D: False
-    BATCH_SIZE: 7 # Default 100
-    NET_E: '../DAMSMencoders/photosynthesis/text_encoder6000.pth'
+    BATCH_SIZE: 6 # Default 100
+    NET_E: '../DAMSMencoders/photosynthesis/text_encoder500.pth'
 
 
 GAN:
-    DF_DIM: 64
-    GF_DIM: 32
+    DF_DIM: 96
+    GF_DIM: 48
     Z_DIM: 100
-    R_NUM: 2
+    R_NUM: 3
 
 TEXT:
     EMBEDDING_DIM: 1000
     CAPTIONS_PER_IMAGE: 1
-    WORDS_NUM: 1000
+    WORDS_NUM: 15

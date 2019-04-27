@@ -229,7 +229,8 @@ class TextDataset(data.Dataset):
 
     def load_text_data(self, data_dir, split):
         logging.debug("data_dir: {}".format(data_dir))
-
+        
+        # Captions filepath located in the data\term directory
         filepath = os.path.join(data_dir, 'captions.pickle')
 
         train_names = self.load_filenames(data_dir, 'train')

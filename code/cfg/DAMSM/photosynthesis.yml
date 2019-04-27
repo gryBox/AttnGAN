@@ -2,8 +2,12 @@ CONFIG_NAME: 'DAMSM'
 
 DATASET_NAME: 'photosynthesis'
 DATA_DIR: '../data/photosynthesis'
-# IMAGE_DIR: 'images'
-# TEXT_DIR: 'text'
+IMAGE_DIR: '../data/photosynthesis/images'
+TEXT_DIR: '../data/photosynthesis/text'
+DELETE_CAPTIONS_PICKLE: True
+TRAIN_SPLIT: 0.7
+VALIDATION_SPLIT: 0.3
+
 GPU_ID: 0
 WORKERS: 1
 
@@ -16,9 +20,9 @@ TREE:
 TRAIN:
     FLAG: True
     NET_E: ''  # '../DAMSMencoders/bird/text_encoder200.pth'
-    BATCH_SIZE: 6 # Changed from 48 - itay (Errors out otherwise)
-    MAX_EPOCH: 1000
-    SNAPSHOT_INTERVAL: 500
+    BATCH_SIZE: 3 # Changed from 48 - itay (Errors out otherwise)
+    MAX_EPOCH: 2
+    SNAPSHOT_INTERVAL: 4
     ENCODER_LR: 0.0002  # 0.0002best; 0.002good; scott: 0.0007 with 0.98decay
     RNN_GRAD_CLIP: 0.25
     SMOOTH:
@@ -29,6 +33,6 @@ TRAIN:
 
 
 TEXT:
-    EMBEDDING_DIM: 1000
+    EMBEDDING_DIM: 512
     CAPTIONS_PER_IMAGE: 1
-    WORDS_NUM: 15
+    WORDS_NUM: 244

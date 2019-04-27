@@ -13,6 +13,11 @@ cfg = __C
 __C.DATASET_NAME = 'birds'
 __C.CONFIG_NAME = ''
 __C.DATA_DIR = ''
+__C.IMAGE_DIR = ''# DATA_DIR/IMAGE_DIR
+__C.TEXT_DIR = '' # DATA_DIR/TEXT_DIR
+__C.DELETE_CAPTIONS_PICKLE = True
+__C.TRAIN_SPLIT = 0.9
+__C.VALIDATION_SPLIT = 0.1
 __C.GPU_ID = 0
 __C.CUDA = True
 __C.WORKERS = 6
@@ -64,7 +69,7 @@ __C.TEXT.WORDS_NUM = 18
 
 
 def _merge_a_into_b(a, b):
-    """Merge config dictionary a into config dictionary b, clobbering the
+    """Merge config dictionary 'a' into config dictionary 'b', clobbering the
     options in b whenever they are also specified in a.
     """
     if type(a) is not edict:

@@ -1,4 +1,4 @@
-CONFIG_NAME: 'attn2'
+CONFIG_NAME: 'glu-gan2'
 
 DATASET_NAME: 'photosynthesis'
 DATA_DIR: '../data/photosynthesis'
@@ -12,28 +12,29 @@ TREE:
 
 TRAIN:
     FLAG: True
-    NET_G: ''  # '../models/bird_AttnGAN2.pth'
+    NET_G: ''  # '../models/coco_AttnGAN2.pth'
     B_NET_D: True
-    BATCH_SIZE: 20  ## 22
-    MAX_EPOCH: 6001
-    SNAPSHOT_INTERVAL: 1000
+    BATCH_SIZE: 6  # 32
+    MAX_EPOCH: 1001
+    SNAPSHOT_INTERVAL: 500
     DISCRIMINATOR_LR: 0.0002
     GENERATOR_LR: 0.0002
     #
-    NET_E: '../DAMSMencoders/photosynthesis/text_encoder6000.pth'
+    NET_E: '../DAMSMencoders/photosynthesis/text_encoder500.pth'
     SMOOTH:
         GAMMA1: 4.0  # 1,2,5 good 4 best  10&100bad
         GAMMA2: 5.0
         GAMMA3: 10.0  # 10good 1&100bad
-        LAMBDA: 5.0
+        LAMBDA: 50.0
 
 
 GAN:
-    DF_DIM: 64
-    GF_DIM: 32
+    DF_DIM: 96
+    GF_DIM: 48
     Z_DIM: 100
-    R_NUM: 2
+    R_NUM: 3
 
 TEXT:
     EMBEDDING_DIM: 1000
     CAPTIONS_PER_IMAGE: 1
+    WORDS_NUM: 15

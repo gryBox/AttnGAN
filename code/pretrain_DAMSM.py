@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import miscc
 from miscc.utils import mkdir_p
 from miscc.utils import build_super_images
 from miscc.losses import sent_loss, words_loss
@@ -32,6 +33,7 @@ import torchvision.transforms as transforms
 dir_path = (os.path.abspath(os.path.join(os.path.realpath(__file__), './.')))
 sys.path.append(dir_path)
 
+import glob
 import logging
 
 logger = logging.getLogger()
@@ -47,7 +49,10 @@ def parse_args():
     parser.add_argument('--gpu', dest='gpu_id', type=int, default=0)
     parser.add_argument('--data_dir', dest='data_dir', type=str, default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed',default=123)
-
+    
+    parser.add_argument('--delete_captions_pickle', type=bool, default=True)
+    parser.add_argument('--train_split', type=float, default=0.8)
+    parser.add_argument('--validation_split', type=float, default=0.2)
     # Text arguments
     parser.add_argument('--embedding_dim', type=int)
     parser.add_argument('--captions_per_image', type=int)
@@ -242,10 +247,18 @@ if __name__ == "__main__":
 
     if args.data_dir != '':
         cfg.DATA_DIR = args.data_dir
-    print('Using config:')
-    pprint.pprint(cfg)
+    
 
-
+    # Text Preprocessing args
+    if args.delete_captions_pickle is not None:
+        cfg.DELETE_CAPTIONS_PICKLE = args.delete_captions_pickle
+    
+    if args.train_split is not None:
+        cfg.TRAIN_SPLIT = args.train_split
+    
+    if args.validation_split is not None:
+        cfg.VALIDATION_SPLIT = args.validation_split
+        
     # Text arguments
     if args.embedding_dim is not None:
         cfg.TEXT.EMBEDDING_DIM = args.embedding_dim
@@ -276,18 +289,41 @@ if __name__ == "__main__":
     if args.gamma3 is not None:
         cfg.TRAIN.SMOOTH.GAMMA3 = args.gamma3
     
-    
-
     if not cfg.TRAIN.FLAG:
         args.manualSeed = 100
     elif args.manualSeed is None:
         args.manualSeed = random.randint(1, 10000)
+    
+    print('Using config:')
+    pprint.pprint(cfg)
+    
     random.seed(args.manualSeed)
     np.random.seed(args.manualSeed)
     torch.manual_seed(args.manualSeed)
+    
     if cfg.CUDA:
         torch.cuda.manual_seed_all(args.manualSeed)
-
+    ##########################################################################
+    # Preprocess training data
+    
+    # 1. Remove File
+    if cfg.DELETE_CAPTIONS_PICKLE:
+        path_to_captions_pickle = os.path.join(cfg.DATA_DIR, 'captions.pickle')
+        miscc.utils.remove_file(path_to_captions_pickle)
+        
+        # 2. Get all the names of files from the text directory (but this can also be done usinf the img dir)
+        txtDirFileNm_lst = glob.glob(cfg.TEXT_DIR + '/**/*.txt', recursive=True)
+        logging.debug("Number of text files: {}".format(len(txtDirFileNm_lst)))
+            
+        #txtDirFileNm_lst = glob.glob(text_flpth+"/**/*.txt", recursive=True)
+        
+        
+        
+        
+        # 3. Split Files between trianing and test data according to config
+        
+    
+    
     ##########################################################################
     now = datetime.datetime.now(dateutil.tz.tzlocal())
     timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')

@@ -12,6 +12,10 @@ import skimage.transform
 
 from miscc.config import cfg
 
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 # For visualization ################################################
 COLOR_DIC = {0:[128,64,128],  1:[244, 35,232],
@@ -330,3 +334,12 @@ def mkdir_p(path):
             pass
         else:
             raise
+
+def remove_file(path):
+    try:
+        os.remove(path)
+        logging.debug("Deleting file: {}".format(path))
+    except:
+        logging.debug("File not found: {}".format(path))
+    
+    return
