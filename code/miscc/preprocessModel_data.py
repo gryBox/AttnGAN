@@ -95,7 +95,7 @@ class PrepareDataset_for_ModelTraining(object):
         
         caption_flpth = os.path.join(txtCaption_flpth, txtFile_nm)
         
-        return  caption_flpth
+        return  p.stem # caption_flpth
     
     # Seperate the filenames to train data and test\cross validation data
     def splitData(self, trainSplit, testSplit, filename_lst):
@@ -110,7 +110,7 @@ class PrepareDataset_for_ModelTraining(object):
         print("Number of Test files: {}".format(numTest_files))
         
         trainFile_lst = filename_lst[:numTrain_files]
-        testFile_lst = filename_lst[-numTrain_files:]
+        testFile_lst = filename_lst[-numTest_files:]
         
         return {
             "train": trainFile_lst,

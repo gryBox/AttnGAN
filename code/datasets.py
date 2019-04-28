@@ -234,10 +234,10 @@ class TextDataset(data.Dataset):
         filepath = os.path.join(data_dir, 'captions.pickle')
 
         train_names = self.load_filenames(data_dir, 'train')
-        logging.debug("train_names: {}".format(train_names[2]))
+        #logging.debug("train_names: {}".format(train_names[2]))
 
         test_names = self.load_filenames(data_dir, 'test')
-        logging.debug("test_names: {}".format(test_names[2]))
+        #logging.debug("test_names: {}".format(test_names[2]))
 
         logging.debug("Check if captions.pickle does not exists")
         if not os.path.isfile(filepath):
