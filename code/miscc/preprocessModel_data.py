@@ -2,10 +2,13 @@
     train and validation sets need to be remeade
 '''
 
-import miscc
+
+import miscc.utils as utils
 
 import pathlib
 import pickle
+import glob
+import numpy as np
 
 import logging
 
@@ -15,11 +18,11 @@ import os
 
 
 
-class PrepareDataset_for_ModelTraining(miscc.config):
+class PrepareDataset_for_ModelTraining(object):
     
-    def __init__(self):
+    def __init__(self, cfg):
         
-        self.cfg = miscc.config
+        self.cfg = cfg
         
         # Initialize all the filepaths
         self.path_to_captions_pickle = os.path.join(self.cfg.DATA_DIR, 'captions.pickle')
@@ -29,35 +32,42 @@ class PrepareDataset_for_ModelTraining(miscc.config):
         
         # Get all the names of files from the text directory
         self.captionsFilename_lst = glob.glob(cfg.TEXT_DIR + '/**/*.txt', recursive=True)
-        logging.debug("Number of text files: {}".format(len(captionsFilename_lst)))
+        logging.info("Number of text files: {}".format(len(self.captionsFilename_lst)))
+        #logging.critical("Text files: {}".format(self.captionsFilename_lst))
         
         ## Transform the filenames to a relative path to the text directory 
         self.modifiedCaptionsFilename_lst = [self.modified_txt_flpth(relCaption_flpth)  for relCaption_flpth in self.captionsFilename_lst]
-  
+        #logging.critical("Modified text files: {}".format(self.modifiedCaptionsFilename_lst))
         ######################
         # 1. Remove caprions pickle file
-        miscc.utils.remove_file(self, self.path_to_captions_pickle)
+        utils.remove_file( self.path_to_captions_pickle)
         
         # 2. Write text filenames to a filenames file
         self.writeFilenames_to_txt(self.filenamesText_flpth, self.modifiedCaptionsFilename_lst)
         
         # 3. Split Files between training and test data according to config settings
-        self.split_dict = self.splitData(cfg.TRAIN_SPLIT, cfg.VALIDATION_SPLIT, self.modifiedCaptionsFilename_lst)
+        self.split_dict = self.splitData(self.cfg.TRAIN_SPLIT, self.cfg.VALIDATION_SPLIT, self.modifiedCaptionsFilename_lst)
         
         # 4. Pickle split textfilenames list andwrite tp directories for models
-        self.pickleFilenames_lst(self.split_dict) 
+        self.processedData_filenames = self.pickleFilenames_lst(self.split_dict) 
         
-        logging.info("FINISHED WRITING TEXT")
+        logging.info("FINISHED WRITING TEXT TO <<{}>>".format(self.processedData_filenames))
     
     def pickleFilenames_lst(self, split_dict):
+        pickled_filename_dict = dict()
         for splitType in self.split_dict:
-            txtFlpth_pickle = os.path.join(self.cfg.DATA_DIR , splitType, 'filenames.pickle')
-            logging.debug('Pickling: {} '.format(txtFlpth_pickle))
             
+            logging.debug('splitType: {} '.format(splitType))
             lst_to_write = self.split_dict[splitType]
-            self.txtFilenamesTo_pickle(flpth, lst_to_write)
-            logging.debug("Number of items in pickled list: {}".format(lst_to_write))
-        return
+            
+            txtFlpth_pickle = os.path.join(self.cfg.DATA_DIR , splitType, 'filenames.pickle')
+            self.txtFilenamesTo_pickle(txtFlpth_pickle, lst_to_write)
+            logging.debug("Number of items in pickled list: {}".format(len(lst_to_write)))
+            
+            pickled_filename_dict[splitType] = txtFlpth_pickle
+            
+            
+        return pickled_filename_dict
     
     def writeFilenames_to_txt(self, filenamesText_flpth, modifiedCaptionsFilename_lst):
         try:
@@ -76,7 +86,7 @@ class PrepareDataset_for_ModelTraining(miscc.config):
     def modified_txt_flpth(self, full_flpth):
         # Read in filepath and seperate
         p = pathlib.Path(full_flpth)
-        txtRel_flpth = p.relative_to(cfg.DATA_DIR)
+        txtRel_flpth = p.relative_to(self.cfg.DATA_DIR)
         txtCaption_flpth = str(txtRel_flpth.parent)
         
         txtFile_nm = txtRel_flpth.stem
@@ -109,7 +119,7 @@ class PrepareDataset_for_ModelTraining(miscc.config):
     
     def txtFilenamesTo_pickle(self, flpth, lst_to_write):
         
-        miscc.utils.handle_missing_directories(os.path.dirname(flpth))
+        utils.handle_missing_directories(os.path.dirname(flpth))
         
         pickle_out  = open(flpth, "wb")
         pickle.dump(lst_to_write, pickle_out)

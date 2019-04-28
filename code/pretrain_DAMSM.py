@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import miscc
+from miscc import preprocessModel_data 
 from miscc.utils import mkdir_p
 from miscc.utils import build_super_images
 from miscc.losses import sent_loss, words_loss
@@ -308,7 +309,7 @@ if __name__ == "__main__":
     
     # Process data for a new pretrain mmodel
     if cfg.DELETE_CAPTIONS_PICKLE:
-        miscc.preprocessModel_data.PrepareDataset_for_ModelTraining()
+        preprocessModel_data.PrepareDataset_for_ModelTraining(cfg)
     else:
         pass
         
