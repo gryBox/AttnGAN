@@ -5,8 +5,8 @@ DATA_DIR: '../data/photosynthesis'
 IMAGE_DIR: '../data/photosynthesis/images'
 TEXT_DIR: '../data/photosynthesis/text'
 DELETE_CAPTIONS_PICKLE: True
-TRAIN_SPLIT: 0.7
-VALIDATION_SPLIT: 0.3
+TRAIN_SPLIT: 0.8
+VALIDATION_SPLIT: 0.2
 
 GPU_ID: 0
 WORKERS: 1

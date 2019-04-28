@@ -12,6 +12,9 @@ import skimage.transform
 
 from miscc.config import cfg
 
+import pathlib
+import pickle
+
 import logging
 
 logger = logging.getLogger()
@@ -341,5 +344,17 @@ def remove_file(path):
         logging.debug("Deleting file: {}".format(path))
     except:
         logging.debug("File not found: {}".format(path))
+    
+    return
+
+def handle_missing_directories(directory_flpth):
+    # Handle missing Directory
+    if not os.path.exists(directory_flpth):
+        
+        os.makedirs(directory_flpth)
+        print("Made new directory: {}".format(directory_flpth))
+        # print(os.path.join(dirname, flpth))
+    else:
+        pass
     
     return

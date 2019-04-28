@@ -306,21 +306,12 @@ if __name__ == "__main__":
     ##########################################################################
     # Preprocess training data
     
-    # 1. Remove File
+    # Process data for a new pretrain mmodel
     if cfg.DELETE_CAPTIONS_PICKLE:
-        path_to_captions_pickle = os.path.join(cfg.DATA_DIR, 'captions.pickle')
-        miscc.utils.remove_file(path_to_captions_pickle)
+        miscc.preprocessModel_data.PrepareDataset_for_ModelTraining()
+    else:
+        pass
         
-        # 2. Get all the names of files from the text directory (but this can also be done usinf the img dir)
-        txtDirFileNm_lst = glob.glob(cfg.TEXT_DIR + '/**/*.txt', recursive=True)
-        logging.debug("Number of text files: {}".format(len(txtDirFileNm_lst)))
-            
-        #txtDirFileNm_lst = glob.glob(text_flpth+"/**/*.txt", recursive=True)
-        
-        
-        
-        
-        # 3. Split Files between trianing and test data according to config
         
     
     
