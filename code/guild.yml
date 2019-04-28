@@ -4,22 +4,40 @@
 
     pretrain:
       description: Pretrain the DAMSM model
-      main: pretrain_DAMSM --data_dir data/photosynthesis
-      # main: pretrain_DAMS_wrapper
+      main: pretrain_DAMSM --data_dir data/photosynthesis --output_dir output
+      flags-import: no
+
+      flags:
+        epochs:
+          description: Number of epochs to run
+          arg-name: max_epoch
+          default: 2
+        gamma1:
+          description: Smooth gamma1
+          default: 0.4
+          type: float
+
       requires:
         - file: ../data
-        - file: cfg/DAMSM
+        - file: cfg
 
       output-scalars:
-        loss: 'valid loss ([0-9\.]+)'
+        step: 'end epoch +([0-9]+)'
+        s_loss: 'valid loss +([0-9\.]+)'
+        w_loss: 'valid loss +[0-9\.]+ +([0-9\.]+)'
+
+      compare:
+        - s_loss step as step
+        - s_loss
+        - w_loss
 
     # train:
     #   description: Train the DAMSM model
     #   #main: main
     #   exec: echo train
 
-    all:
-      description: Run all steps for building model start to finish
-      steps:
-        - run: pretrain
-        #- run: train
+    #all:
+    #  description: Run all steps for building model start to finish
+    #  steps:
+    #    - run: pretrain
+    #    #- run: train

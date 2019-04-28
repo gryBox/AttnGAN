@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 import miscc
-from miscc import prepareData_files 
+from miscc import prepareData_files
 from miscc.utils import mkdir_p
 from miscc.utils import build_super_images
 from miscc.losses import sent_loss, words_loss
@@ -49,8 +49,9 @@ def parse_args():
                         default='cfg/DAMSM/photosynthesis.yml', type=str)
     parser.add_argument('--gpu', dest='gpu_id', type=int, default=0)
     parser.add_argument('--data_dir', dest='data_dir', type=str, default='')
+    parser.add_argument('--output_dir', type=str, default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed',default=123)
-    
+
     parser.add_argument('--delete_captions_pickle', type=bool, default=True)
     parser.add_argument('--train_split', type=float)
     parser.add_argument('--validation_split', type=float)
@@ -58,7 +59,7 @@ def parse_args():
     parser.add_argument('--embedding_dim', type=int)
     parser.add_argument('--captions_per_image', type=int)
     parser.add_argument('--words_num', type=int)
-    
+
     # Train arguments
     parser.add_argument('--max_epoch', type=int)
     parser.add_argument('--encoder_lr', type=float)
@@ -156,12 +157,12 @@ def train(dataloader, cnn_model, rnn_model, batch_size,
             #     build_super_images(imgs[-1].cpu(), captions,
             #                       ixtoword, attn_maps, att_sze)
             #print(imgs[-1])
-            img_set, _ = build_super_images(imgs[-1].cpu(), 
+            img_set, _ = build_super_images(imgs[-1].cpu(),
                                             captions,
-                                            ixtoword, 
-                                            attn_maps, 
+                                            ixtoword,
+                                            attn_maps,
                                             att_sze)
-            
+
             if img_set is not None:
                 im = Image.fromarray(img_set)
                 fullpath = '%s/attention_maps%d.png' % (image_dir, step)
@@ -195,12 +196,12 @@ def evaluate(dataloader, cnn_model, rnn_model, batch_size):
 
         if step == 50:
             break
-    
+
     if step!=0:
         pass
     else:
         step = 0.01
-        
+
     s_cur_loss = s_total_loss.item() / step
     w_cur_loss = w_total_loss.item() / step
 
@@ -248,78 +249,74 @@ if __name__ == "__main__":
 
     if args.data_dir != '':
         cfg.DATA_DIR = args.data_dir
-    
+
+    if args.output_dir != '':
+        cfg.OUTPUT_DIR = args.output_dir
 
     # Text Preprocessing args
-    if args.delete_captions_pickle is not None:
-        cfg.DELETE_CAPTIONS_PICKLE = args.delete_captions_pickle
-    
+    cfg.DELETE_CAPTIONS_PICKLE = args.delete_captions_pickle
+
     if args.train_split is not None:
         cfg.TRAIN_SPLIT = args.train_split
-    
+
     if args.validation_split is not None:
         cfg.VALIDATION_SPLIT = args.validation_split
-        
+
     # Text arguments
     if args.embedding_dim is not None:
         cfg.TEXT.EMBEDDING_DIM = args.embedding_dim
-        
+
     if args.captions_per_image is not None:
         cfg.TEXT.EMBEDDING_DIM = args.captions_per_image
-    
+
     if args.words_num is not None:
         cfg.TEXT.EMBEDDING_DIM = args.words_num
-        
+
 
     # Train arguments
     if args.max_epoch is not None:
         cfg.TRAIN.MAX_EPOCH = args.max_epoch
-    
+
     if args.encoder_lr is not None:
         cfg.TRAIN.ENCODER_LR = args.encoder_lr
-    
+
     if args.rnn_grad_clip is not None:
         cfg.TRAIN.RNN_GRAD_CLIP = args.rnn_grad_clip
-    
+
     if args.gamma1 is not None:
         cfg.TRAIN.SMOOTH.GAMMA1 = args.gamma1
-    
+
     if args.gamma2 is not None:
         cfg.TRAIN.SMOOTH.GAMMA2 = args.gamma2
-    
+
     if args.gamma3 is not None:
         cfg.TRAIN.SMOOTH.GAMMA3 = args.gamma3
-    
+
     if not cfg.TRAIN.FLAG:
         args.manualSeed = 100
     elif args.manualSeed is None:
         args.manualSeed = random.randint(1, 10000)
-    
+
     print('Using config:')
     pprint.pprint(cfg)
-    
+
     random.seed(args.manualSeed)
     np.random.seed(args.manualSeed)
     torch.manual_seed(args.manualSeed)
     ##########################################################################
     # Preprocess training data
-    
+
     # Process data for a new pretrain mmodel
     if cfg.DELETE_CAPTIONS_PICKLE:
         prepareData_files.PrepareDataset_for_ModelTraining(cfg)
-    else:
-        pass
-        
-        
-    
-    
+
     ##########################################################################
     if cfg.CUDA:
         torch.cuda.manual_seed_all(args.manualSeed)
 
     now = datetime.datetime.now(dateutil.tz.tzlocal())
     timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
-    output_dir = '../output/%s_%s_%s' % \
+    output_dir = cfg.OUTPUT_DIR + '/%s_%s_%s' % \
         (cfg.DATASET_NAME, cfg.CONFIG_NAME, timestamp)
 
     model_dir = os.path.join(output_dir, 'Model')

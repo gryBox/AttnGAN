@@ -2,8 +2,8 @@ CONFIG_NAME: 'DAMSM'
 
 DATASET_NAME: 'photosynthesis'
 DATA_DIR: '../data/photosynthesis'
-IMAGE_DIR: '../data/photosynthesis/images'
-TEXT_DIR: '../data/photosynthesis/text'
+OUTPUT_DIR: '../output'
+
 DELETE_CAPTIONS_PICKLE: True
 TRAIN_SPLIT: 1.0
 VALIDATION_SPLIT: 1.0
@@ -14,7 +14,7 @@ WORKERS: 1
 
 TREE:
     BRANCH_NUM: 1
-    BASE_SIZE: 5 # Chunks 
+    BASE_SIZE: 5 # Chunks
 
 
 TRAIN:

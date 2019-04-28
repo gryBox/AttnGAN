@@ -28,6 +28,7 @@ def parse_args():
                         default='cfg/bird_attn2.yml', type=str)
     parser.add_argument('--gpu', dest='gpu_id', type=int, default=-1)
     parser.add_argument('--data_dir', dest='data_dir', type=str, default='')
+    parser.add_argument('--output_dir', default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed')
     args = parser.parse_args()
     return args
@@ -95,6 +96,9 @@ if __name__ == "__main__":
 
     if args.data_dir != '':
         cfg.DATA_DIR = args.data_dir
+    if args.output_dir != '':
+        cfg.OUTPUT_DIR = args.output_dir
+
     print('Using config:')
     pprint.pprint(cfg)
 
