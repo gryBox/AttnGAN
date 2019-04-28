@@ -301,9 +301,6 @@ if __name__ == "__main__":
     random.seed(args.manualSeed)
     np.random.seed(args.manualSeed)
     torch.manual_seed(args.manualSeed)
-    
-    if cfg.CUDA:
-        torch.cuda.manual_seed_all(args.manualSeed)
     ##########################################################################
     # Preprocess training data
     
@@ -317,6 +314,9 @@ if __name__ == "__main__":
     
     
     ##########################################################################
+    if cfg.CUDA:
+        torch.cuda.manual_seed_all(args.manualSeed)
+
     now = datetime.datetime.now(dateutil.tz.tzlocal())
     timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
     output_dir = '../output/%s_%s_%s' % \
