@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 import miscc
-from miscc import preprocessModel_data 
+from miscc import prepareData_files 
 from miscc.utils import mkdir_p
 from miscc.utils import build_super_images
 from miscc.losses import sent_loss, words_loss
@@ -52,8 +52,8 @@ def parse_args():
     parser.add_argument('--manualSeed', type=int, help='manual seed',default=123)
     
     parser.add_argument('--delete_captions_pickle', type=bool, default=True)
-    parser.add_argument('--train_split', type=float, default=0.8)
-    parser.add_argument('--validation_split', type=float, default=0.2)
+    parser.add_argument('--train_split', type=float)
+    parser.add_argument('--validation_split', type=float)
     # Text arguments
     parser.add_argument('--embedding_dim', type=int)
     parser.add_argument('--captions_per_image', type=int)
@@ -309,7 +309,7 @@ if __name__ == "__main__":
     
     # Process data for a new pretrain mmodel
     if cfg.DELETE_CAPTIONS_PICKLE:
-        preprocessModel_data.PrepareDataset_for_ModelTraining(cfg)
+        prepareData_files.PrepareDataset_for_ModelTraining(cfg)
     else:
         pass
         

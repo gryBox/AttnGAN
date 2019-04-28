@@ -23,6 +23,8 @@ class PrepareDataset_for_ModelTraining(object):
     def __init__(self, cfg):
         
         self.cfg = cfg
+        #logging.critical(self.cfg)
+        
         
         # Initialize all the filepaths
         self.path_to_captions_pickle = os.path.join(self.cfg.DATA_DIR, 'captions.pickle')
@@ -120,6 +122,8 @@ class PrepareDataset_for_ModelTraining(object):
     def txtFilenamesTo_pickle(self, flpth, lst_to_write):
         
         utils.handle_missing_directories(os.path.dirname(flpth))
+        
+        utils.remove_file(flpth)
         
         pickle_out  = open(flpth, "wb")
         pickle.dump(lst_to_write, pickle_out)

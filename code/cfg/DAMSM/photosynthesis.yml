@@ -5,8 +5,8 @@ DATA_DIR: '../data/photosynthesis'
 IMAGE_DIR: '../data/photosynthesis/images'
 TEXT_DIR: '../data/photosynthesis/text'
 DELETE_CAPTIONS_PICKLE: True
-TRAIN_SPLIT: 0.8
-VALIDATION_SPLIT: 0.2
+TRAIN_SPLIT: 1.0
+VALIDATION_SPLIT: 1.0
 
 GPU_ID: 0
 WORKERS: 1
@@ -33,6 +33,6 @@ TRAIN:
 
 
 TEXT:
-    EMBEDDING_DIM: 512
+    EMBEDDING_DIM: 100
     CAPTIONS_PER_IMAGE: 1
     WORDS_NUM: 244
