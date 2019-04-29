@@ -1,3 +1,5 @@
+# guild: python>=3
+
 PyYAML
 easydict
 nltk
