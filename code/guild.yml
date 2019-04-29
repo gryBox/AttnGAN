@@ -51,6 +51,8 @@
         - s_loss
         - w_loss
 
+      objective: s_loss
+
     # train:
     #   description: Train the DAMSM model
     #   #main: main
