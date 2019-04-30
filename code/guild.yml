@@ -47,6 +47,7 @@
         w_loss: 'valid loss +[0-9\.]+ +([0-9\.]+)'
 
       compare:
+        - =gamma1
         - s_loss step as step
         - s_loss
         - w_loss
