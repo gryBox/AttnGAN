@@ -31,12 +31,16 @@ def parse_args():
     parser.add_argument('--output_dir', default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed', default=123)
     
+    parser.add_argument('--delete_captions_pickle', type=bool, default=True)
+    parser.add_argument('--train_split', type=float)
+    parser.add_argument('--validation_split', type=float)
+    
     # Train params
     parser.add_argument('--max_epoch', type=int)
     parser.add_argument('--net_g', default='')
     parser.add_argument('--discriminator_lr', type=float)
     parser.add_argument('--generator_lr', type=float)
-    parser.add_argument('--net_e', dest='data_dir', type=str, default='')
+    parser.add_argument('--net_e', default='')
     parser.add_argument('--gamma1', type=float)
     parser.add_argument('--gamma2', type=float)
     parser.add_argument('--gamma3', type=float)
@@ -125,6 +129,15 @@ if __name__ == "__main__":
     
     if args.output_dir != '':
         cfg.OUTPUT_DIR = args.output_dir
+    
+    # Text Preprocessing args
+    cfg.DELETE_CAPTIONS_PICKLE = args.delete_captions_pickle
+
+    if args.train_split is not None:
+        cfg.TRAIN_SPLIT = args.train_split
+
+    if args.validation_split is not None:
+        cfg.VALIDATION_SPLIT = args.validation_split
         
     # Train params
     if args.max_epoch is not None:

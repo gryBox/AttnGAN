@@ -1,7 +1,7 @@
-text/photosynthesis_4
-text/photosynthesis_0
-text/photosynthesis_5
-text/photosynthesis_6
-text/photosynthesis_3
-text/photosynthesis_1
-text/photosynthesis_2
+photosynthesis_4
+photosynthesis_0
+photosynthesis_5
+photosynthesis_6
+photosynthesis_3
+photosynthesis_1
+photosynthesis_2
