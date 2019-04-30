@@ -40,15 +40,13 @@ def parse_args():
     parser.add_argument('--gamma1', type=float)
     parser.add_argument('--gamma2', type=float)
     parser.add_argument('--gamma3', type=float)
-    parser.add_argument('--lambda', type=float)
+    parser.add_argument('--lambda_a', type=float) # Renamed to lambda_a from LAMBDA .. keyword parse
     
     # GAN
-        DF_DIM: 96
-    GF_DIM: 48
-    Z_DIM: 100
-    R_NUM: 3
-    
-    
+    parser.add_argument('--df_dim', type=int)
+    parser.add_argument('--gf_dim', type=int)
+    parser.add_argument('--z_dim', type=int)
+    parser.add_argument('--r_num', type=int)
     
     # Text arguments
     parser.add_argument('--embedding_dim', type=int)
@@ -124,8 +122,60 @@ if __name__ == "__main__":
 
     if args.data_dir != '':
         cfg.DATA_DIR = args.data_dir
+    
     if args.output_dir != '':
         cfg.OUTPUT_DIR = args.output_dir
+        
+    # Train params
+    if args.max_epoch is not None:
+        cfg.TRAIN.MAX_EPOCH = args.max_epoch
+        
+    if args.net_g is not None:
+        cfg.TRAIN.NET_G = args.net_g    
+        
+    if args.discriminator_lr is not None:
+        cfg.TRAIN.DISCRIMINATOR_LR = args.discriminator_lr 
+
+    if args.generator_lr is not None:
+        cfg.TRAIN.GENERATOR_LR = args.generator_lr
+        
+    if args.net_e != '':
+        cfg.TRAIN.NET_E = args.net_e
+ 
+    if args.gamma1 is not None:
+        cfg.TRAIN.SMOOTH.GAMMA1 = args.gamma1
+
+    if args.gamma2 is not None:
+        cfg.TRAIN.SMOOTH.GAMMA2 = args.gamma2
+
+    if args.gamma3 is not None:
+        cfg.TRAIN.SMOOTH.GAMMA3 = args.gamma3
+        
+    if args.lambda_a is not None:
+        cfg.TRAIN.SMOOTH.LAMBDA = args.lambda_a
+    
+    # GAN
+    if args.df_dim is not None:
+        cfg.GAN.DF_DIM = args.df_dim
+        
+    if args.gf_dim is not None:
+        cfg.GAN.GF_DIM = args.gf_dim
+
+    if args.z_dim is not None:
+        cfg.GAN.z_dim = args.z_dim
+    
+    if args.r_num is not None:
+        cfg.GAN.r_num = args.r_num
+    
+    # Text arguments
+    if args.embedding_dim is not None:
+        cfg.TEXT.EMBEDDING_DIM = args.embedding_dim
+
+    if args.captions_per_image is not None:
+        cfg.TEXT.EMBEDDING_DIM = args.captions_per_image
+
+    if args.words_num is not None:
+        cfg.TEXT.EMBEDDING_DIM = args.words_num
 
     print('Using config:')
     pprint.pprint(cfg)

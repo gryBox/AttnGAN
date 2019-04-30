@@ -11,30 +11,30 @@
         epochs:
           description: Number of epochs to run
           arg-name: max_epoch
-          default: 2
+          default: 201  # So the last trained model can be captured
         gamma1:
           description: Smooth gamma1
-          default: 4.0
+          default: 72.4953
           type: float
         gamma2:
           description: Smooth gamma2
-          default: 5.0
+          default: 65.3585
           type: float
         gamma3:
           description: Smooth gamma3
-          default: 10.0
+          default: 50.0
           type: float
         encoder_lr:
           description: ENCODER_LR
-          default: 0.0002
+          default: 0.003189
           type: float
         embedding_dim:
           description: EMBEDDING_DIM
-          default: 256
+          default: 1024
           type: int
         rnn_grad_clip:
           description: RNN_GRAD_CLIP
-          default: 0.25
+          default: 2.0
           type: float
 
       requires:
