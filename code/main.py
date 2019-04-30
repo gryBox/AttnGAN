@@ -29,7 +29,35 @@ def parse_args():
     parser.add_argument('--gpu', dest='gpu_id', type=int, default=-1)
     parser.add_argument('--data_dir', dest='data_dir', type=str, default='')
     parser.add_argument('--output_dir', default='')
-    parser.add_argument('--manualSeed', type=int, help='manual seed')
+    parser.add_argument('--manualSeed', type=int, help='manual seed', default=123)
+    
+    # Train params
+    parser.add_argument('--max_epoch', type=int)
+    parser.add_argument('--net_g', default='')
+    parser.add_argument('--discriminator_lr', type=float)
+    parser.add_argument('--generator_lr', type=float)
+    parser.add_argument('--net_e', dest='data_dir', type=str, default='')
+    parser.add_argument('--gamma1', type=float)
+    parser.add_argument('--gamma2', type=float)
+    parser.add_argument('--gamma3', type=float)
+    parser.add_argument('--lambda', type=float)
+    
+    # GAN
+        DF_DIM: 96
+    GF_DIM: 48
+    Z_DIM: 100
+    R_NUM: 3
+    
+    
+    
+    # Text arguments
+    parser.add_argument('--embedding_dim', type=int)
+    parser.add_argument('--captions_per_image', type=int)
+    parser.add_argument('--words_num', type=int)
+    
+    
+    
+    
     args = parser.parse_args()
     return args
 

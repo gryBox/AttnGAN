@@ -67,6 +67,7 @@ def parse_args():
     parser.add_argument('--gamma1', type=float)
     parser.add_argument('--gamma2', type=float)
     parser.add_argument('--gamma3', type=float)
+    
     args = parser.parse_args()
     return args
 
