@@ -268,10 +268,10 @@ if __name__ == "__main__":
         cfg.TEXT.EMBEDDING_DIM = args.embedding_dim
 
     if args.captions_per_image is not None:
-        cfg.TEXT.EMBEDDING_DIM = args.captions_per_image
+        cfg.TEXT.CAPTIONS_PER_IMAGE = args.captions_per_image
 
     if args.words_num is not None:
-        cfg.TEXT.EMBEDDING_DIM = args.words_num
+        cfg.TEXT.WORDS_NUM = args.words_num
 
 
     # Train arguments

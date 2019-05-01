@@ -12,10 +12,10 @@ TREE:
 
 TRAIN:
     FLAG: False
-    NET_G: '../models/photosynthesis_AttnGAN2.pth'
+    NET_G: '../models/phoyosynthesis_AttnGAN2.pth'
     B_NET_D: False
     BATCH_SIZE: 6 # Default 100
-    NET_E: '../DAMSMencoders/photosynthesis/text_encoder500.pth'
+    NET_E: '../DAMSMencoders/photosynthesis/text_encoder200.pth'
 
 
 GAN:
@@ -25,6 +25,6 @@ GAN:
     R_NUM: 3
 
 TEXT:
-    EMBEDDING_DIM: 1000
+    EMBEDDING_DIM: 1024
     CAPTIONS_PER_IMAGE: 1
-    WORDS_NUM: 15
+    WORDS_NUM: 244

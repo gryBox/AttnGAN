@@ -24,6 +24,11 @@ import time
 import numpy as np
 import sys
 
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
 # ################# Text to image task############################ #
 class condGANTrainer(object):
     def __init__(self, output_dir, data_loader, n_words, ixtoword):
@@ -351,6 +356,7 @@ class condGANTrainer(object):
 
     def sampling(self, split_dir):
         if cfg.TRAIN.NET_G == '':
+            logging.debug("cfg.TRAIN.NET_G: {}".format(cfg.TRAIN.NET_G))
             print('Error: the path for morels is not found!')
         else:
             if split_dir == 'test':
@@ -440,6 +446,7 @@ class condGANTrainer(object):
 
     def gen_example(self, data_dic):
         if cfg.TRAIN.NET_G == '':
+            logging.debug("cfg.TRAIN.NET_G: {}".format(cfg.TRAIN.NET_G))
             print('Error: the path for morels is not found!')
         else:
             # Build and load the generator
@@ -459,6 +466,7 @@ class condGANTrainer(object):
                 netG = G_NET()
             s_tmp = cfg.TRAIN.NET_G[:cfg.TRAIN.NET_G.rfind('.pth')]
             model_dir = cfg.TRAIN.NET_G
+            logging.debug("Model dir: {}".format(model_dir))
             state_dict = \
                 torch.load(model_dir, map_location=lambda storage, loc: storage)
             netG.load_state_dict(state_dict)

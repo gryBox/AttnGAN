@@ -17,6 +17,12 @@ import numpy as np
 import torch
 import torchvision.transforms as transforms
 
+
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
 dir_path = (os.path.abspath(os.path.join(os.path.realpath(__file__), './.')))
 sys.path.append(dir_path)
 
@@ -74,7 +80,7 @@ def gen_example(wordtoix, algo):
         for name in filenames:
             if len(name) == 0:
                 continue
-            filepath = '{}/{}.txt'.format(cfg.DATA_DIR, name)
+            filepath = '{}/{}/{}.txt'.format(cfg.DATA_DIR, 'text', name)
             with open(filepath, "r") as f:
                 print('Load from:', name)
                 sentences = f.read().split('\n')
@@ -143,7 +149,7 @@ if __name__ == "__main__":
     if args.max_epoch is not None:
         cfg.TRAIN.MAX_EPOCH = args.max_epoch
         
-    if args.net_g is not None:
+    if args.net_g != '':
         cfg.TRAIN.NET_G = args.net_g    
         
     if args.discriminator_lr is not None:
@@ -185,10 +191,10 @@ if __name__ == "__main__":
         cfg.TEXT.EMBEDDING_DIM = args.embedding_dim
 
     if args.captions_per_image is not None:
-        cfg.TEXT.EMBEDDING_DIM = args.captions_per_image
+        cfg.TEXT.CAPTIONS_PER_IMAGE = args.captions_per_image
 
     if args.words_num is not None:
-        cfg.TEXT.EMBEDDING_DIM = args.words_num
+        cfg.TEXT.WORDS_NUM = args.words_num
 
     print('Using config:')
     pprint.pprint(cfg)
