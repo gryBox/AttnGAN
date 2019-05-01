@@ -44,7 +44,10 @@
 
     pretrain:
       description: Pretrain the DAMSM model
-      main: pretrain_DAMSM --data_dir data/photosynthesis --output_dir output --cfg cfg/DAMSM/photosynthesis.yml
+      main: pretrain_DAMSM
+             --data_dir data/photosynthesis
+             --output_dir output
+             --cfg cfg/DAMSM/photosynthesis.yml
       flags-import: no
 
       flags:
@@ -77,14 +80,22 @@
 
     train:
       description: Train the DAMSM model
-      main: main --data_dir data/photosynthesis
-                 --model_dir ''
-                 --cfg cfg/photosynthesis_attn2.yml
+      main: main
+             --data_dir data/photosynthesis
+             --model_dir pretrain
+             --output_dir output
+             --cfg cfg/photosynthesis_attn2.yml
       requires:
         - file: cfg
         - file: ../data
         - name: pretrain
           operation: pretrain
           select: .+\.pth
-          # TODO: get these under models and update --model_dir above
+          path: pretrain
+
       flags-import: no
+      flags:
+        epochs:
+          description: Number of epochs to run
+          arg-name: max_epoch
+          default: 2

@@ -124,14 +124,14 @@ def _latest_pretrain_model(model_dir):
     latest_path = None
     model_paths = glob.glob(os.path.join(model_dir, 'text_encoder*.pth'))
     for path in model_paths:
-        m = re.match(r'text_encoder([0-9]+)', path)
+        m = re.search(r'text_encoder([0-9]+).pth$', path)
         if not m:
             continue
         epoch = int(m.group(1))
         if epoch > max_epoch:
             max_epoch = epoch
             latest_path = path
-    assert latest_path, (model_dir, model_paths)
+    assert latest_path, model_paths
     return latest_path
 
 if __name__ == "__main__":
@@ -162,10 +162,10 @@ if __name__ == "__main__":
     # Train params
     if args.max_epoch is not None:
         cfg.TRAIN.MAX_EPOCH = args.max_epoch
-        
+
     if args.net_g != '':
-        cfg.TRAIN.NET_G = args.net_g    
-        
+        cfg.TRAIN.NET_G = args.net_g
+
 
     if args.discriminator_lr is not None:
         cfg.TRAIN.DISCRIMINATOR_LR = args.discriminator_lr
@@ -228,8 +228,8 @@ if __name__ == "__main__":
 
     now = datetime.datetime.now(dateutil.tz.tzlocal())
     timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
-    output_dir = '../output/{}_{}_{}'.format(cfg.DATASET_NAME, cfg.CONFIG_NAME, timestamp)
-
+    output_dir = cfg.OUTPUT_DIR + '/%s_%s_%s' % \
+        (cfg.DATASET_NAME, cfg.CONFIG_NAME, timestamp)
 
     split_dir, bshuffle = 'train', True
     if not cfg.TRAIN.FLAG:
