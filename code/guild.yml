@@ -1,3 +1,43 @@
+- config: shared-flags
+  flags:
+    epochs:
+      description: Number of epochs to run
+      arg-name: max_epoch
+      default: 201  # So the last trained model can be captured
+    gamma1:
+      description: Smooth gamma1
+      default: 72.4953
+      type: float
+    gamma2:
+      description: Smooth gamma2
+      default: 65.3585
+      type: float
+    gamma3:
+      description: Smooth gamma3
+      default: 89.2507
+      type: float
+    encoder_lr:
+      description: ENCODER_LR
+      default: 0.003189
+      type: float
+    embedding_dim:
+      description: EMBEDDING_DIM
+      default: 1024
+      type: int
+    rnn_grad_clip:
+      description: RNN_GRAD_CLIP
+      default: 2.0
+      type: float
+    captions_per_image:
+      description: CAPTIONS_PER_IMAGE
+      default: 1
+      type: int
+    words_num:
+      description: WORDS_NUM
+      default: 244
+      type: int
+
+
 - model: damsm
   description: Deep Attentional Multimodal Similarity Model (DAMSM)
   operations:
@@ -8,42 +48,7 @@
       flags-import: no
 
       flags:
-        epochs:
-          description: Number of epochs to run
-          arg-name: max_epoch
-          default: 201  # So the last trained model can be captured
-        gamma1:
-          description: Smooth gamma1
-          default: 72.4953
-          type: float
-        gamma2:
-          description: Smooth gamma2
-          default: 65.3585
-          type: float
-        gamma3:
-          description: Smooth gamma3
-          default: 50.0
-          type: float
-        encoder_lr:
-          description: ENCODER_LR
-          default: 0.003189
-          type: float
-        embedding_dim:
-          description: EMBEDDING_DIM
-          default: 1024
-          type: int
-        rnn_grad_clip:
-          description: RNN_GRAD_CLIP
-          default: 2.0
-          type: float
-        captions_per_image:
-          description: CAPTIONS_PER_IMAGE
-          default: 1
-          type: int
-        words_num:
-          description: WORDS_NUM
-          default: 244
-          type: int
+        $include: shared-flags
 
       requires:
         - file: ../data
@@ -83,11 +88,3 @@
           select: .+\.pth
           # TODO: get these under models and update --model_dir above
       flags-import: no
-
->>>>>>> a5cd262e357ec23ff435bf5531a684f19abea782
-
-    #all:
-    #  description: Run all steps for building model start to finish
-    #  steps:
-    #    - run: pretrain
-    #    #- run: train
