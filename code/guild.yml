@@ -1,13 +1,57 @@
+- config: shared-flags
+  flags:
+    epochs:
+      description: Number of epochs to run
+      arg-name: max_epoch
+      default: 201  # So the last trained model can be captured
+    gamma1:
+      description: Smooth gamma1
+      default: 72.4953
+      type: float
+    gamma2:
+      description: Smooth gamma2
+      default: 65.3585
+      type: float
+    gamma3:
+      description: Smooth gamma3
+      default: 89.2507
+      type: float
+    encoder_lr:
+      description: ENCODER_LR
+      default: 0.003189
+      type: float
+    embedding_dim:
+      description: EMBEDDING_DIM
+      default: 1024
+      type: int
+    rnn_grad_clip:
+      description: RNN_GRAD_CLIP
+      default: 2.0
+      type: float
+    captions_per_image:
+      description: CAPTIONS_PER_IMAGE
+      default: 1
+      type: int
+    words_num:
+      description: WORDS_NUM
+      default: 244
+      type: int
+
+
 - model: damsm
   description: Deep Attentional Multimodal Similarity Model (DAMSM)
   operations:
 
     pretrain:
       description: Pretrain the DAMSM model
-      main: pretrain_DAMSM --data_dir data/photosynthesis --output_dir output --cfg cfg/DAMSM/photosynthesis.yml
+      main: pretrain_DAMSM
+             --data_dir data/photosynthesis
+             --output_dir output
+             --cfg cfg/DAMSM/photosynthesis.yml
       flags-import: no
 
       flags:
+<<<<<<< HEAD
         epochs:
           description: Number of epochs to run
           arg-name: max_epoch
@@ -44,6 +88,9 @@
           description: WORDS_NUM
           default: 244
           type: int
+=======
+        $include: shared-flags
+>>>>>>> d1c8715a55e114e51532ccafbbb9cb5aa07f254f
 
       requires:
         - file: ../data
@@ -70,6 +117,7 @@
 
       objective: s_loss
 
+<<<<<<< HEAD
     # train:
     #   description: Train the DAMSM model
     #   main: main --data_dir data/photosynthesis
@@ -114,3 +162,26 @@
     #  steps:
     #    - run: pretrain
     #    #- run: train
+=======
+    train:
+      description: Train the DAMSM model
+      main: main
+             --data_dir data/photosynthesis
+             --model_dir pretrain
+             --output_dir output
+             --cfg cfg/photosynthesis_attn2.yml
+      requires:
+        - file: cfg
+        - file: ../data
+        - name: pretrain
+          operation: pretrain
+          select: .+\.pth
+          path: pretrain
+
+      flags-import: no
+      flags:
+        epochs:
+          description: Number of epochs to run
+          arg-name: max_epoch
+          default: 2
+>>>>>>> d1c8715a55e114e51532ccafbbb9cb5aa07f254f
