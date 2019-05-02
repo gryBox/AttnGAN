@@ -162,8 +162,8 @@ if __name__ == "__main__":
 
     if args.net_e != '':
         cfg.TRAIN.NET_E = args.net_e
-    # else:
-    #     cfg.TRAIN.NET_E = _latest_pretrain_model(args.model_dir)
+    else:
+        cfg.TRAIN.NET_E = _latest_pretrain_model(args.model_dir)
 
     if args.gamma1 is not None:
         cfg.TRAIN.SMOOTH.GAMMA1 = args.gamma1
