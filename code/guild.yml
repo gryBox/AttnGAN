@@ -131,18 +131,17 @@
           path: pretrain
 
       flags-import: no
-      flags_:
+      flags:
         epochs:
           description: Number of epochs to run
-          arg-name: max_epoch
+          arg-name: MAX_EPOCH
           default: 201
         discriminator_lr:
           description: ''
-          arg-name: DISCRIMINATOR_LR
           default: 0.0002
         generator_lr:
           description: GENERATOR_LR
-          arg-name: generator_lr
+
           default: 0.0002
         lambda_a:
           description: LAMBDA
@@ -150,19 +149,19 @@
           default: 50
         df_dim:
           description: DF_DIM
-          arg-name: df_dim
+
           default: 96
         gf_dim:
           description: GF_DIM
-          arg-name: gf_dim
+
           default: 48
         z_dim:
           description: Z_DIM
-          arg-name: z_dim
+
           default: 100
         r_num:
           description: R_NUM
-          arg-name: r_num
+
           default: 3
 
 
