@@ -40,10 +40,6 @@ def parse_args():
     parser.add_argument('--output_dir', default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed', default=123)
 
-    parser.add_argument('--delete_captions_pickle', type=bool, default=True)
-    parser.add_argument('--train_split', type=float)
-    parser.add_argument('--validation_split', type=float)
-
     # Train params
     parser.add_argument('--max_epoch', type=int)
     parser.add_argument('--net_g', default='')
@@ -150,15 +146,6 @@ if __name__ == "__main__":
     if args.output_dir != '':
         cfg.OUTPUT_DIR = args.output_dir
 
-    # Text Preprocessing args
-    cfg.DELETE_CAPTIONS_PICKLE = args.delete_captions_pickle
-
-    if args.train_split is not None:
-        cfg.TRAIN_SPLIT = args.train_split
-
-    if args.validation_split is not None:
-        cfg.VALIDATION_SPLIT = args.validation_split
-
     # Train params
     if args.max_epoch is not None:
         cfg.TRAIN.MAX_EPOCH = args.max_epoch
@@ -167,16 +154,16 @@ if __name__ == "__main__":
         cfg.TRAIN.NET_G = args.net_g
 
 
-    if args.discriminator_lr is not None:
-        cfg.TRAIN.DISCRIMINATOR_LR = args.discriminator_lr
+    # if args.discriminator_lr is not None:
+    #     cfg.TRAIN.DISCRIMINATOR_LR = args.discriminator_lr
 
     if args.generator_lr is not None:
         cfg.TRAIN.GENERATOR_LR = args.generator_lr
 
     if args.net_e != '':
         cfg.TRAIN.NET_E = args.net_e
-    else:
-        cfg.TRAIN.NET_E = _latest_pretrain_model(args.model_dir)
+    # else:
+    #     cfg.TRAIN.NET_E = _latest_pretrain_model(args.model_dir)
 
     if args.gamma1 is not None:
         cfg.TRAIN.SMOOTH.GAMMA1 = args.gamma1
@@ -198,10 +185,10 @@ if __name__ == "__main__":
         cfg.GAN.GF_DIM = args.gf_dim
 
     if args.z_dim is not None:
-        cfg.GAN.z_dim = args.z_dim
+        cfg.GAN.Z_DIM = args.z_dim
 
     if args.r_num is not None:
-        cfg.GAN.r_num = args.r_num
+        cfg.GAN.R_NUM = args.r_num
 
     # Text arguments
     if args.embedding_dim is not None:

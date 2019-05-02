@@ -51,7 +51,6 @@
       flags-import: no
 
       flags:
-<<<<<<< HEAD
         epochs:
           description: Number of epochs to run
           arg-name: max_epoch
@@ -88,9 +87,8 @@
           description: WORDS_NUM
           default: 244
           type: int
-=======
+
         $include: shared-flags
->>>>>>> d1c8715a55e114e51532ccafbbb9cb5aa07f254f
 
       requires:
         - file: ../data
@@ -117,52 +115,6 @@
 
       objective: s_loss
 
-<<<<<<< HEAD
-    # train:
-    #   description: Train the DAMSM model
-    #   main: main --data_dir data/photosynthesis
-    #             --model_dir ''
-    #             --cfg cfg/photosynthesis_attn2.yml
-    #   requires:
-    #     - file: cfg
-    #     - file: ../data
-    #     - name: pretrain
-    # #       operation: pretrain
-    # #       select: .+\.pth
-    #       # TODO: get these under models and update --model_dir above
-    #   flags-import: no
-    #   output-scalars:
-    #     step: 'end epoch +([0-9]+)'
-    #     s_loss: 'valid loss +([0-9\.]+)'
-    #     w_loss: 'valid loss +[0-9\.]+ +([0-9\.]+)'
-
-    #   compare:
-    #     - s_loss step as step
-    #     - s_loss
-    #     - w_loss
-    #     - =epochs
-    #     - =embedding_dim
-    #     - =captions_per_image
-    #     - =words_num
-    #     - =discriminator_lr
-    #     - =generator_lr
-    #     - =gamma1
-    #     - =gamma2
-    #     - =gamma3
-    #     - =lambda_a
-    #     - =df_dim
-    #     - =gf_dim
-    #     - =z_dim
-    #     - =r_num
-
-    #   objective: s_loss
-
-    #all:
-    #  description: Run all steps for building model start to finish
-    #  steps:
-    #    - run: pretrain
-    #    #- run: train
-=======
     train:
       description: Train the DAMSM model
       main: main
@@ -183,5 +135,35 @@
         epochs:
           description: Number of epochs to run
           arg-name: max_epoch
-          default: 2
->>>>>>> d1c8715a55e114e51532ccafbbb9cb5aa07f254f
+          default: 201
+        discriminator_lr:
+          description: ''
+          arg-name: DISCRIMINATOR_LR
+          default: 0.0002
+        generator_lr:
+          description: GENERATOR_LR
+          arg-name: generator_lr
+          default: 0.0002
+        lambda_a:
+          description: LAMBDA
+          arg-name: lambda_a
+          default: 50
+        df_dim:
+          description: DF_DIM
+          arg-name: df_dim
+          default: 96
+        gf_dim:
+          description: GF_DIM
+          arg-name: gf_dim
+          default: 48
+        z_dim:
+          description: Z_DIM
+          arg-name: z_dim
+          default: 100
+        r_num:
+          description: R_NUM
+          arg-name: r_num
+          default: 3
+
+    
+      $include: shared-flags
