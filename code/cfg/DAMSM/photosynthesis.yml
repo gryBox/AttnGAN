@@ -2,7 +2,6 @@ CONFIG_NAME: 'DAMSM'
 
 DATASET_NAME: 'photosynthesis'
 DATA_DIR: '../data/photosynthesis'
-OUTPUT_DIR: '../output'
 
 DELETE_CAPTIONS_PICKLE: True
 TRAIN_SPLIT: 1.0
