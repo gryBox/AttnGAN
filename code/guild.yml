@@ -1,6 +1,12 @@
 # TODO
 #
 # - Verify/cleanup flag descriptions
+#
+# - Consider creating a symlink to last generated pth file
+#   whenever writing such files (e.g. latest.pth). Then
+#   change the default path to latest in CFG support. This
+#   is a simpler, more typical approach to solving this
+#   problem.
 
 - config: shared-flags
   flags:
@@ -127,7 +133,21 @@
           description: R
           default: 3
 
+    evaluate:
+      description: 'TODO: Is this the right op name, or is it predict?'
+      main: guild.pass
+      requires:
+        - name: pretrain
+          operation: pretrain
+          select: .+\.pth
+          path: pretrain
+        - name: train
+          operation: train
+          select: .+\.pth
+          path: train
+
     _check:
       steps:
         - run: pretrain epochs=1
         - run: train epochs=1
+        - run: evaluate
