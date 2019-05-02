@@ -131,7 +131,7 @@
           path: pretrain
 
       flags-import: no
-      flags:
+      flags_:
         epochs:
           description: Number of epochs to run
           arg-name: max_epoch
@@ -165,5 +165,5 @@
           arg-name: r_num
           default: 3
 
-    
+
       $include: shared-flags
