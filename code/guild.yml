@@ -1,42 +1,30 @@
+# TODO
+#
+# - Verify/cleanup flag descriptions
+
 - config: shared-flags
   flags:
     epochs:
       description: Number of epochs to run
       arg-name: max_epoch
-      default: 201  # So the last trained model can be captured
     gamma1:
       description: Smooth gamma1
       default: 72.4953
-      type: float
     gamma2:
       description: Smooth gamma2
       default: 65.3585
-      type: float
     gamma3:
       description: Smooth gamma3
       default: 89.2507
-      type: float
-    encoder_lr:
-      description: ENCODER_LR
-      default: 0.003189
-      type: float
     embedding_dim:
-      description: EMBEDDING_DIM
+      description: Embedding dimension
       default: 1024
-      type: int
-    rnn_grad_clip:
-      description: RNN_GRAD_CLIP
-      default: 2.0
-      type: float
     captions_per_image:
-      description: CAPTIONS_PER_IMAGE
+      description: Number of captions per image
       default: 1
-      type: int
     words_num:
-      description: WORDS_NUM
+      description: Number of words per caption
       default: 244
-      type: int
-
 
 - model: damsm
   description: Deep Attentional Multimodal Similarity Model (DAMSM)
@@ -49,46 +37,27 @@
              --output_dir output
              --cfg cfg/DAMSM/photosynthesis.yml
       flags-import: no
-
       flags:
-        epochs:
-          description: Number of epochs to run
-          arg-name: max_epoch
-          default: 201  # So the last trained model can be captured
-        gamma1:
-          description: Smooth gamma1
-          default: 72.4953
-          type: float
-        gamma2:
-          description: Smooth gamma2
-          default: 65.3585
-          type: float
-        gamma3:
-          description: Smooth gamma3
-          default: 89.2507
-          type: float
-        encoder_lr:
-          description: ENCODER_LR
-          default: 0.003189
-          type: float
-        embedding_dim:
-          description: EMBEDDING_DIM
-          default: 124
-          type: int
-        rnn_grad_clip:
-          description: RNN_GRAD_CLIP
-          default: 2.0
-          type: float
-        captions_per_image:
-          description: CAPTIONS_PER_IMAGE
-          default: 1
-          type: int
-        words_num:
-          description: WORDS_NUM
-          default: 244
-          type: int
-
         $include: shared-flags
+
+        # Pretrain specific flag defaults
+        epochs: 201
+        gamma1: 72.4953
+        gamma2: 65.3585
+        gamma3: 89.2507
+        encoder_lr: 0.003189
+        embedding_dim: 1024
+        rnn_grad_clip: 2.0
+        captions_per_image: 1
+        words_num: 244
+
+        # Pretrain specific flags
+        encoder_lr:
+          description: Encoder learning rate
+          default: 0.003189
+        rnn_grad_clip:
+          description: RNN gradient clip
+          default: 2.0
 
       requires:
         - file: ../data
@@ -121,6 +90,7 @@
              --data_dir data/photosynthesis
              --model_dir pretrain
              --output_dir output
+             --net_e latest
              --cfg cfg/photosynthesis_attn2.yml
       requires:
         - file: cfg
@@ -132,37 +102,32 @@
 
       flags-import: no
       flags:
-        epochs:
-          description: Number of epochs to run
-          arg-name: MAX_EPOCH
-          default: 201
+        $include: shared-flags
+
+        # Train specific flags
         discriminator_lr:
-          description: ''
+          description: Discriminator learning rate
           default: 0.0002
         generator_lr:
-          description: GENERATOR_LR
-
+          description: Generator learning rate
           default: 0.0002
         lambda_a:
-          description: LAMBDA
-          arg-name: lambda_a
+          description: Lambda A
           default: 50
         df_dim:
-          description: DF_DIM
-
+          description: DF dimension
           default: 96
         gf_dim:
-          description: GF_DIM
-
+          description: GF dimension
           default: 48
         z_dim:
-          description: Z_DIM
-
+          description: X dimension
           default: 100
         r_num:
-          description: R_NUM
-
+          description: R
           default: 3
 
-
-      $include: shared-flags
+    _check:
+      steps:
+        - run: pretrain epochs=1
+        - run: train epochs=1

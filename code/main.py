@@ -161,7 +161,7 @@ if __name__ == "__main__":
         cfg.TRAIN.GENERATOR_LR = args.generator_lr
 
     if args.net_e != '':
-        if args.net_e == 'latest':  
+        if args.net_e == 'latest':
             cfg.TRAIN.NET_E = _latest_pretrain_model(args.model_dir)
         else:
             cfg.TRAIN.NET_E = args.net_e
