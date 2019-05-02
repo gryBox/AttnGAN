@@ -22,7 +22,7 @@
           type: float
         gamma3:
           description: Smooth gamma3
-          default: 50.0
+          default: 89.2507
           type: float
         encoder_lr:
           description: ENCODER_LR
@@ -30,7 +30,7 @@
           type: float
         embedding_dim:
           description: EMBEDDING_DIM
-          default: 1024
+          default: 124
           type: int
         rnn_grad_clip:
           description: RNN_GRAD_CLIP
@@ -70,21 +70,44 @@
 
       objective: s_loss
 
-    train:
-      description: Train the DAMSM model
-      main: main --data_dir data/photosynthesis
-                 --model_dir ''
-                 --cfg cfg/photosynthesis_attn2.yml
-      requires:
-        - file: cfg
-        - file: ../data
-        - name: pretrain
-          operation: pretrain
-          select: .+\.pth
-          # TODO: get these under models and update --model_dir above
-      flags-import: no
+    # train:
+    #   description: Train the DAMSM model
+    #   main: main --data_dir data/photosynthesis
+    #             --model_dir ''
+    #             --cfg cfg/photosynthesis_attn2.yml
+    #   requires:
+    #     - file: cfg
+    #     - file: ../data
+    #     - name: pretrain
+    # #       operation: pretrain
+    # #       select: .+\.pth
+    #       # TODO: get these under models and update --model_dir above
+    #   flags-import: no
+    #   output-scalars:
+    #     step: 'end epoch +([0-9]+)'
+    #     s_loss: 'valid loss +([0-9\.]+)'
+    #     w_loss: 'valid loss +[0-9\.]+ +([0-9\.]+)'
 
->>>>>>> a5cd262e357ec23ff435bf5531a684f19abea782
+    #   compare:
+    #     - s_loss step as step
+    #     - s_loss
+    #     - w_loss
+    #     - =epochs
+    #     - =embedding_dim
+    #     - =captions_per_image
+    #     - =words_num
+    #     - =discriminator_lr
+    #     - =generator_lr
+    #     - =gamma1
+    #     - =gamma2
+    #     - =gamma3
+    #     - =lambda_a
+    #     - =df_dim
+    #     - =gf_dim
+    #     - =z_dim
+    #     - =r_num
+
+    #   objective: s_loss
 
     #all:
     #  description: Run all steps for building model start to finish

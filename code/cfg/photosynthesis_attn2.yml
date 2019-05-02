@@ -17,7 +17,7 @@ TRAIN:
     FLAG: True
     NET_G: ''  # '../models/coco_AttnGAN2.pth'
     B_NET_D: True
-    BATCH_SIZE: 6  # 32
+    BATCH_SIZE: 5  # 32
     MAX_EPOCH: 201
     SNAPSHOT_INTERVAL: 100
     DISCRIMINATOR_LR: 0.0002
@@ -27,7 +27,7 @@ TRAIN:
     SMOOTH:
         GAMMA1: 72.4953  # 1,2,5 good 4 best  10&100bad
         GAMMA2: 65.3585
-        GAMMA3: 50.0  # 10good 1&100bad
+        GAMMA3: 89.2507  # 10good 1&100bad
         LAMBDA: 50.0
 
 
@@ -38,6 +38,6 @@ GAN:
     R_NUM: 3
 
 TEXT:
-    EMBEDDING_DIM: 1024
+    EMBEDDING_DIM: 124
     CAPTIONS_PER_IMAGE: 1
     WORDS_NUM: 244

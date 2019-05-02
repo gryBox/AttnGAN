@@ -13,6 +13,15 @@ python main.py --cfg cfg/photosynthesis_attn2.yml --gpu 0
 # 4. Copy the model from output directory to models and rename
 netG_epoch_6000.pth -> photosynthesis_AttnGAN2
 
+COnfigs to Test:
+    DISCRIMINATOR_LR: 0.0002
+    GENERATOR_LR: 0.0002
+    LAMBDA: 50.0 
+
+    DF_DIM: 96
+    GF_DIM: 48
+    Z_DIM: 100
+    R_NUM: 3
 # 5. Change prediction text in data\photosynthesis\example_captions.txt to desired text
 
 # 6. Run Prediction
