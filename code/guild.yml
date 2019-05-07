@@ -24,7 +24,7 @@
       default: 89.2507
     embedding_dim:
       description: Embedding dimension
-      default: 1024
+      default: 128
     captions_per_image:
       description: Number of captions per image
       default: 1
@@ -52,7 +52,7 @@
         gamma2: 65.3585
         gamma3: 89.2507
         encoder_lr: 0.003189
-        embedding_dim: 1024
+        embedding_dim: 128
         rnn_grad_clip: 2.0
         captions_per_image: 1
         words_num: 244
@@ -148,6 +148,6 @@
 
     _check:
       steps:
-        - run: pretrain epochs=1
-        - run: train epochs=1
+        - run: pretrain epochs=201
+        - run: train epochs=201
         - run: evaluate
