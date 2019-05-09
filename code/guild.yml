@@ -74,20 +74,6 @@
         s_loss: 'valid loss +([0-9\.]+)'
         w_loss: 'valid loss +[0-9\.]+ +([0-9\.]+)'
 
-      compare:
-        - s_loss step as step
-        - s_loss
-        - w_loss
-        - =epochs
-        - =embedding_dim
-        - =captions_per_image
-        - =words_num
-        - =gamma1
-        - =gamma2
-        - =gamma3
-        - =encoder_lr
-        - =rnn_grad_clip
-
       objective: s_loss
 
     train:
