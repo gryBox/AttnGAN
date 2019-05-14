@@ -153,7 +153,6 @@ if __name__ == "__main__":
     if args.net_g != '':
         cfg.TRAIN.NET_G = args.net_g
 
-
     if args.discriminator_lr is not None:
         cfg.TRAIN.DISCRIMINATOR_LR = args.discriminator_lr
 

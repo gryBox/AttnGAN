@@ -31,6 +31,48 @@
     words_num:
       description: Number of words per caption
       default: 244
+      
+- config: pretrain-flags
+  flags:
+    delete_captions_pickle:
+      description: Force re-create of captions pickle 
+      default: yes
+    train_split:
+      description: Ratio of data used for training
+      default: 1.0
+    validation_split:
+      description: Ration of data used for validation
+      default: 1.0
+    encoder_lr:
+      description: Encoder learning rate
+      default: 0.003189
+    rnn_grad_clip:
+      description: RNN gradient clip
+      default: 2.0
+      
+- config: train-flags
+  flags:
+    discriminator_lr:
+      description: Discriminator learning rate
+      default: 0.0002
+    generator_lr:
+      description: Generator learning rate
+      default: 0.0002
+    lambda_a:
+      description: Lambda A
+      default: 50
+    df_dim:
+      description: DF dimension
+      default: 96
+    gf_dim:
+      description: GF dimension
+      default: 48
+    z_dim:
+      description: X dimension
+      default: 100
+    r_num:
+      description: R
+      default: 3
 
 - model: damsm
   description: Deep Attentional Multimodal Similarity Model (DAMSM)
@@ -44,30 +86,24 @@
              --cfg cfg/DAMSM/photosynthesis.yml
       flags-import: no
       flags:
-        $include: shared-flags
+        $include:
+          - shared-flags
+          - pretrain-flags
 
-        # Pretrain specific flag defaults
-        epochs: 201
-        gamma1: 72.4953
-        gamma2: 65.3585
-        gamma3: 89.2507
-        encoder_lr: 0.003189
-        embedding_dim: 128
-        rnn_grad_clip: 2.0
-        captions_per_image: 1
-        words_num: 244
-
-        # Pretrain specific flags
-        encoder_lr:
-          description: Encoder learning rate
-          default: 0.003189
-        rnn_grad_clip:
-          description: RNN gradient clip
-          default: 2.0
+        # Override flag defaults for pretrain
+        # epochs: 201
+        # gamma1: 72.4953
+        # gamma2: 65.3585
+        # gamma3: 89.2507
+        # encoder_lr: 0.003189
+        # embedding_dim: 128
+        # rnn_grad_clip: 2.0
+        # captions_per_image: 1
+        # words_num: 244
 
       requires:
-        - file: ../data
         - file: cfg
+        - file: ../data
 
       output-scalars:
         step: 'end epoch +([0-9]+)'
@@ -80,57 +116,42 @@
       description: Train the DAMSM model
       main: main
              --data_dir data/photosynthesis
-             --model_dir pretrain
+             --model_dir nets
              --output_dir output
              --net_e latest
              --cfg cfg/photosynthesis_attn2.yml
       requires:
         - file: cfg
         - file: ../data
-        - name: pretrain
-          operation: pretrain
+        - operation: pretrain
+          name: pretrain
           select: .+\.pth
-          path: pretrain
+          path: nets
 
       flags-import: no
       flags:
-        $include: shared-flags
-
-        # Train specific flags
-        discriminator_lr:
-          description: Discriminator learning rate
-          default: 0.0002
-        generator_lr:
-          description: Generator learning rate
-          default: 0.0002
-        lambda_a:
-          description: Lambda A
-          default: 50
-        df_dim:
-          description: DF dimension
-          default: 96
-        gf_dim:
-          description: GF dimension
-          default: 48
-        z_dim:
-          description: X dimension
-          default: 100
-        r_num:
-          description: R
-          default: 3
+        $include:
+          - shared-flags
+          - train-flags
 
     evaluate:
-      description: 'TODO: Is this the right op name, or is it predict?'
-      main: guild.pass
+      description: Predict on trained model
+      main: main
+             --model_dir nets
+             --data_dir data/photosynthesis
+             --cfg cfg/eval_photosynthesis.yml
+      flags-import: no
       requires:
-        - name: pretrain
-          operation: pretrain
+        - file: cfg
+        - file: ../data
+        - operation: pretrain
+          name: pretrain
           select: .+\.pth
-          path: pretrain
-        - name: train
-          operation: train
+          path: nets
+        - operation: train
+          name: train
           select: .+\.pth
-          path: train
+          path: nets
 
     _check:
       steps:
