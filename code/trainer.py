@@ -304,7 +304,8 @@ class condGANTrainer(object):
                 for p, avg_p in zip(netG.parameters(), avg_param_G):
                     avg_p.mul_(0.999).add_(0.001, p.data)
 
-                if gen_iterations % 100 == 0:
+                if gen_iterations % 1 == 0: # Default was 100
+                    print("Step: %i" % gen_iterations)
                     print(D_logs + '\n' + G_logs)
                 # save images
                 if gen_iterations % 1000 == 0:

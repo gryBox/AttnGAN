@@ -51,6 +51,7 @@ def parse_args():
     parser.add_argument('--data_dir', dest='data_dir', type=str, default='')
     parser.add_argument('--output_dir', type=str, default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed',default=123)
+    parser.add_argument('--batch_size', type=int)
 
     parser.add_argument('--delete_captions_pickle', type=bool, default=True)
     parser.add_argument('--train_split', type=float)
@@ -67,10 +68,9 @@ def parse_args():
     parser.add_argument('--gamma1', type=float)
     parser.add_argument('--gamma2', type=float)
     parser.add_argument('--gamma3', type=float)
-    
+
     args = parser.parse_args()
     return args
-
 
 def train(dataloader, cnn_model, rnn_model, batch_size,
           labels, optimizer, epoch, ixtoword, image_dir):
@@ -267,12 +267,14 @@ if __name__ == "__main__":
     if args.embedding_dim is not None:
         cfg.TEXT.EMBEDDING_DIM = args.embedding_dim
 
+    if args.batch_size is not None:
+        cfg.TRAIN.BATCH_SIZE = args.batch_size
+
     if args.captions_per_image is not None:
         cfg.TEXT.CAPTIONS_PER_IMAGE = args.captions_per_image
 
     if args.words_num is not None:
         cfg.TEXT.WORDS_NUM = args.words_num
-
 
     # Train arguments
     if args.max_epoch is not None:

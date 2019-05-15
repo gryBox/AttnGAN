@@ -40,9 +40,10 @@ def parse_args():
     parser.add_argument('--output_dir', default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed', default=123)
     parser.add_argument('--b_validation',type=bool)
-    
+    parser.add_argument('--batch_size', type=int)
 
     # Train params
+    parser.add_argument('--train_flag',type=bool)
     parser.add_argument('--max_epoch', type=int)
     parser.add_argument('--net_g', default='')
     parser.add_argument('--b_net_d', type=bool)
@@ -142,9 +143,12 @@ if __name__ == "__main__":
         cfg.GPU_ID = args.gpu_id
     else:
         cfg.CUDA = False
-    
+
     if args.b_validation is not None:
         cfg.B_VALIDATION = args.b_validation
+
+    if args.batch_size is not None:
+        cfg.TRAIN.BATCH_SIZE = args.batch_size
 
     if args.data_dir != '':
         cfg.DATA_DIR = args.data_dir
@@ -156,17 +160,20 @@ if __name__ == "__main__":
     if args.max_epoch is not None:
         cfg.TRAIN.MAX_EPOCH = args.max_epoch
 
+    if args.batch_size is not None:
+        cfg.TRAIN.BATCH_SIZE = args.batch_size
+
     if args.net_g != '':
         cfg.TRAIN.NET_G = args.net_g
-        
+
     # Evaluate param
     if args.b_net_d is not None:
         cfg.TRAIN.B_NET_G = args.b_net_d
-    
+
     if args.train_flag is not None:
         cfg.TRAIN.FLAG = args.train_flag
-    
-    
+
+
     ####
     if args.discriminator_lr is not None:
         cfg.TRAIN.DISCRIMINATOR_LR = args.discriminator_lr

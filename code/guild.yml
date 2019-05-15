@@ -13,6 +13,9 @@
     epochs:
       description: Number of epochs to run
       arg-name: max_epoch
+    batch_size:
+      description: Training batch size
+      default: 7
     gamma1:
       description: Smooth gamma1
       default: 72.4953
@@ -80,7 +83,6 @@
       description: Boolean flag #(todo: get description)
       default: False
 
-
 - model: damsm
   description: Deep Attentional Multimodal Similarity Model (DAMSM)
   operations:
@@ -91,6 +93,11 @@
              --data_dir data/photosynthesis
              --output_dir output
              --cfg cfg/DAMSM/photosynthesis.yml
+
+      requires:
+        - file: cfg
+        - file: ../data
+
       flags-import: no
       flags:
         $include:
@@ -108,16 +115,12 @@
         # captions_per_image: 1
         # words_num: 244
 
-      requires:
-        - file: cfg
-        - file: ../data
-
       output-scalars:
         step: 'end epoch +([0-9]+)'
         s_loss: 'valid loss +([0-9\.]+)'
         w_loss: 'valid loss +[0-9\.]+ +([0-9\.]+)'
 
-      objective: s_loss
+      objective: w_loss
 
     train:
       description: Train the DAMSM model
@@ -140,6 +143,20 @@
         $include:
           - shared-flags
           - train-flags
+          
+      output-scalars:
+        step: 'Step: ([0-9]+)'
+        errD0: 'errD0: (\S+)'
+        errD1: 'errD1: (\S+)'
+        errD2: 'errD2: (\S+)'
+        g_loss0: 'g_loss0: (\S+)'
+        g_loss1: 'g_loss1: (\S+)'
+        g_loss2: 'g_loss2: (\S+)'
+        w_loss: 'w_loss: (\S+)'
+        s_loss: 's_loss: (\S+)'
+        kl_loss: 'kl_loss: (\S+)'
+
+      objective: w_loss
 
     evaluate:
       description: Predict on trained model
@@ -164,6 +181,7 @@
           - shared-flags
           - evaluate-flags
       
+      # overwrite default
       train_flag: no
       
       
