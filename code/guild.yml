@@ -34,11 +34,11 @@
     words_num:
       description: Number of words per caption
       default: 244
-      
+
 - config: pretrain-flags
   flags:
     delete_captions_pickle:
-      description: Force re-create of captions pickle 
+      description: Force re-create of captions pickle
       default: yes
     train_split:
       description: Ratio of data used for training
@@ -52,7 +52,7 @@
     rnn_grad_clip:
       description: RNN gradient clip
       default: 2.0
-      
+
 - config: train-flags
   flags:
     discriminator_lr:
@@ -85,18 +85,39 @@
 
 - model: damsm
   description: Deep Attentional Multimodal Similarity Model (DAMSM)
-  operations:
 
+  resources:
+    config:
+      sources:
+        - file: cfg
+    data:
+      sources:
+        - file: ../data/photosynthesis
+
+    pretrained-model:
+      path: nets
+      sources:
+        - operation: pretrain
+          select: .+\.pth
+
+    trained-model:
+      path: nets
+      sources:
+        - operation: train
+          select: .+\.pth
+
+  operations:
     pretrain:
       description: Pretrain the DAMSM model
+
       main: pretrain_DAMSM
-             --data_dir data/photosynthesis
+             --data_dir photosynthesis
              --output_dir output
              --cfg cfg/DAMSM/photosynthesis.yml
 
       requires:
-        - file: cfg
-        - file: ../data
+        - config
+        - data
 
       flags-import: no
       flags:
@@ -124,26 +145,25 @@
 
     train:
       description: Train the DAMSM model
+
       main: main
-             --data_dir data/photosynthesis
+             --data_dir photosynthesis
              --model_dir nets
              --output_dir output
              --net_e latest
              --cfg cfg/photosynthesis_attn2.yml
+
       requires:
-        - file: cfg
-        - file: ../data
-        - operation: pretrain
-          name: pretrain
-          select: .+\.pth
-          path: nets
+        - config
+        - data
+        - pretrained-model
 
       flags-import: no
       flags:
         $include:
           - shared-flags
           - train-flags
-          
+
       output-scalars:
         step: 'Step: ([0-9]+)'
         errD0: 'errD0: (\S+)'
@@ -164,30 +184,21 @@
              --model_dir nets
              --data_dir data/photosynthesis
              --cfg cfg/eval_photosynthesis.yml
-      flags-import: no
+
       requires:
-        - file: cfg
-        - file: ../data
-        - operation: pretrain
-          name: pretrain
-          select: .+\.pth
-          path: nets
-        - operation: train
-          name: train
-          select: .+\.pth
-          path: nets
+        - config
+        - data
+        - pretrained-model
+        - trained-model
+
+      flags-import: no
       flags:
         $include:
           - shared-flags
           - evaluate-flags
-      
-      # overwrite default
-      train_flag: no
-      
-      
-      
+
     _check:
       steps:
-        - run: pretrain epochs=201
-        - run: train epochs=201
+        - run: pretrain epochs=1
+        - run: train epochs=1
         - run: evaluate
