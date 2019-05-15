@@ -74,6 +74,13 @@
       description: R
       default: 3
 
+- config: evaluate-flags
+  flags:
+    b_net_d:
+      description: Boolean flag #(todo: get description)
+      default: False
+
+
 - model: damsm
   description: Deep Attentional Multimodal Similarity Model (DAMSM)
   operations:
@@ -90,7 +97,7 @@
           - shared-flags
           - pretrain-flags
 
-        # Override flag defaults for pretrain
+        # Uncomment below to override flag defaults for pretrain
         # epochs: 201
         # gamma1: 72.4953
         # gamma2: 65.3585
@@ -152,7 +159,15 @@
           name: train
           select: .+\.pth
           path: nets
-
+      flags:
+        $include:
+          - shared-flags
+          - evaluate-flags
+      
+      train_flag: no
+      
+      
+      
     _check:
       steps:
         - run: pretrain epochs=201
