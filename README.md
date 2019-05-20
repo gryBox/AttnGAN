@@ -1,12 +1,73 @@
-# AttnGAN
+# TIG
+A python library to generate images using open source text to image libraries .
+
+
+## What tig does.
+- Accept text as an input and return an image based on a tig maintained library with three inputs. 
+    (1) predict text 
+    (2) algorithm 
+    (3) Process type i.e. CPU or GPU  
+- Automate and Log model runs of tig maintained models.
+- Advanced users can train their own models.
+    - Help in preparing training data for new models.  A model is a trained object that when fed text can generate an image for that text.
+        #### Example 1:
+        A model trained on the cub data set (birds)  
+    - Retool tig maintained models for your own use
+
+
+# What tig does not do.
+- Supply the compute  
+
+
+# TIG's Goal
+Allow users to easily generate images for text. For users who simply want to generate an image on a pre-trained modelto image models on  new data sets in To actively maintain various text to image algorithms that can be used for research and commercial applications.
+
+
+##
+
+
+- inputs:
+    - your train data or use premade example datasets
+        -   Example:
+        -   Example:
+    - sentence(s) you wish to generate images for
+        -   Example:
+- output:
+    -  Image(s)
+        -   Example:
+
+# Why?
+Generating images from text is a powerful concept.  Algorithms that can generate images from text have applications in education, engineering, game making.  However getting to the image you wanted to generate (output), can be a complicated, multistep process.
+
+
+
+# Purpose
+To advance the application of image generation models in research and commercial projects.
+
+
+# Current Use Cases
+- Generate random images of birds:
+-
+- Generate random images of Live objects
+-
+
+# Limitations
+- Training Models on your own take a long time
+- Lots of Resources
+- Current pretrained are limited
+
+
+
+# TIG Maintainad Algorithms
+### AttnGAN
 
 Pytorch implementation for reproducing AttnGAN results in the paper [AttnGAN: Fine-Grained Text to Image Generation
-with Attentional Generative Adversarial Networks](http://openaccess.thecvf.com/content_cvpr_2018/papers/Xu_AttnGAN_Fine-Grained_Text_CVPR_2018_paper.pdf) by Tao Xu, Pengchuan Zhang, Qiuyuan Huang, Han Zhang, Zhe Gan, Xiaolei Huang, Xiaodong He. (This work was performed when Tao was an intern with Microsoft Research). 
+with Attentional Generative Adversarial Networks](http://openaccess.thecvf.com/content_cvpr_2018/papers/Xu_AttnGAN_Fine-Grained_Text_CVPR_2018_paper.pdf) by Tao Xu, Pengchuan Zhang, Qiuyuan Huang, Han Zhang, Zhe Gan, Xiaolei Huang, Xiaodong He. (This work was performed when Tao was an intern with Microsoft Research).
 
 <img src="framework.png" width="900px" height="350px"/>
 
 
-### Dependencies
+#### Dependencies
 python 3.6+
 
 Pytorch 1.0+
@@ -33,7 +94,7 @@ In addition, please add the project folder to PYTHONPATH and `pip install` the f
 - Pre-train DAMSM models:
   - For bird dataset: `python pretrain_DAMSM.py --cfg cfg/DAMSM/bird.yml --gpu 0`
   - For coco dataset: `python pretrain_DAMSM.py --cfg cfg/DAMSM/coco.yml --gpu 1`
- 
+
 - Train AttnGAN models:
   - For bird dataset: `python main.py --cfg cfg/bird_attn2.yml --gpu 2`
   - For coco dataset: `python main.py --cfg cfg/coco_attn2.yml --gpu 3`
@@ -49,12 +110,12 @@ In addition, please add the project folder to PYTHONPATH and `pip install` the f
 - [AttnGAN for coco](https://drive.google.com/open?id=1i9Xkg9nU74RAvkcqKE-rJYhjvzKAMnCi). Download and save it to `models/`
 
 - [AttnDCGAN for bird](https://drive.google.com/open?id=19TG0JUoXurxsmZLaJ82Yo6O0UJ6aDBpg). Download and save it to `models/`
-  - This is an variant of AttnGAN which applies the propsoed attention mechanisms to DCGAN framework. 
+  - This is an variant of AttnGAN which applies the propsoed attention mechanisms to DCGAN framework.
 
 **Sampling**
-- Run `python main.py --cfg cfg/eval_bird.yml --gpu 1` to generate examples from captions in files listed in "./data/birds/example_filenames.txt". Results are saved to `DAMSMencoders/`. 
-- Change the `eval_*.yml` files to generate images from other pre-trained models. 
-- Input your own sentence in "./data/birds/example_captions.txt" if you wannt to generate images from customized sentences. 
+- Run `python main.py --cfg cfg/eval_bird.yml --gpu 1` to generate examples from captions in files listed in "./data/birds/example_filenames.txt". Results are saved to `DAMSMencoders/`.
+- Change the `eval_*.yml` files to generate images from other pre-trained models.
+- Input your own sentence in "./data/birds/example_captions.txt" if you wannt to generate images from customized sentences.
 
 **Validation**
 - To generate images for all captions in the validation dataset, change B_VALIDATION to True in the eval_*.yml. and then run `python main.py --cfg cfg/eval_bird.yml --gpu 1`
@@ -69,7 +130,7 @@ In addition, please add the project folder to PYTHONPATH and `pip install` the f
 ![](https://github.com/taoxugit/AttnGAN/blob/master/example_bird.png)  |  ![](https://github.com/taoxugit/AttnGAN/blob/master/example_coco.png)
 
 
-### Creating an API
+#### Creating an API
 [Evaluation code](eval) embedded into a callable containerized API is included in the `eval\` folder.
 
 ### Citing AttnGAN
@@ -88,3 +149,6 @@ If you find AttnGAN useful in your research, please consider citing:
 
 - [StackGAN++: Realistic Image Synthesis with Stacked Generative Adversarial Networks](https://arxiv.org/abs/1710.10916) [[code]](https://github.com/hanzhanggit/StackGAN-v2)
 - [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://arxiv.org/abs/1511.06434) [[code]](https://github.com/carpedm20/DCGAN-tensorflow)
+
+
+<a class="anchor" id="1"></a>

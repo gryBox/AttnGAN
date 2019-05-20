@@ -13,21 +13,22 @@
     epochs:
       description: Number of epochs to run
       arg-name: max_epoch
+      default: 201
     batch_size:
       description: Training batch size
       default: 7
     gamma1:
       description: Smooth gamma1
-      default: 72.4953
+      default: 168.6969
     gamma2:
       description: Smooth gamma2
-      default: 65.3585
+      default: 51.1301
     gamma3:
       description: Smooth gamma3
-      default: 89.2507
+      default: 26.8084
     embedding_dim:
       description: Embedding dimension
-      default: 128
+      default: 1024
     captions_per_image:
       description: Number of captions per image
       default: 1
@@ -48,10 +49,10 @@
       default: 1.0
     encoder_lr:
       description: Encoder learning rate
-      default: 0.003189
+      default: 0.0382
     rnn_grad_clip:
       description: RNN gradient clip
-      default: 2.0
+      default: 197
 
 - config: train-flags
   flags:
@@ -86,7 +87,7 @@
 - model: damsm
   description: Deep Attentional Multimodal Similarity Model (DAMSM)
 
-  resources:
+  resources: # Is a logical of required files (a set of names of files )
     config:
       sources:
         - file: cfg
@@ -184,6 +185,7 @@
              --model_dir nets
              --data_dir data/photosynthesis
              --cfg cfg/eval_photosynthesis.yml
+             --output_dir output
 
       requires:
         - config

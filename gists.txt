@@ -16,7 +16,7 @@ netG_epoch_6000.pth -> photosynthesis_AttnGAN2
 COnfigs to Test:
     DISCRIMINATOR_LR: 0.0002
     GENERATOR_LR: 0.0002
-    LAMBDA: 50.0 
+    LAMBDA: 50.0
 
     DF_DIM: 96
     GF_DIM: 48
