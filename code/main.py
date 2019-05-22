@@ -36,7 +36,6 @@ def parse_args():
                         default='cfg/bird_attn2.yml', type=str)
     parser.add_argument('--gpu', dest='gpu_id', type=int, default=-1)
     parser.add_argument('--data_dir', dest='data_dir', type=str, default='')
-    parser.add_argument('--model_dir', default='')
     parser.add_argument('--output_dir', default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed', default=123)
     parser.add_argument('--b_validation',type=bool)
@@ -119,21 +118,6 @@ def gen_example(wordtoix, algo):
             data_dic[key] = [cap_array, cap_lens, sorted_indices]
     algo.gen_example(data_dic)
 
-def _latest_pretrain_model(model_dir):
-    max_epoch = -1
-    latest_path = None
-    model_paths = glob.glob(os.path.join(model_dir, 'text_encoder*.pth'))
-    for path in model_paths:
-        m = re.search(r'text_encoder([0-9]+).pth$', path)
-        if not m:
-            continue
-        epoch = int(m.group(1))
-        if epoch > max_epoch:
-            max_epoch = epoch
-            latest_path = path
-    assert latest_path, model_paths
-    return latest_path
-
 if __name__ == "__main__":
     args = parse_args()
     if args.cfg_file is not None:
@@ -182,10 +166,7 @@ if __name__ == "__main__":
         cfg.TRAIN.GENERATOR_LR = args.generator_lr
 
     if args.net_e != '':
-        if args.net_e == 'latest':
-            cfg.TRAIN.NET_E = _latest_pretrain_model(args.model_dir)
-        else:
-            cfg.TRAIN.NET_E = args.net_e
+        cfg.TRAIN.NET_E = args.net_e
 
     if args.gamma1 is not None:
         cfg.TRAIN.SMOOTH.GAMMA1 = args.gamma1
