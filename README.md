@@ -1,30 +1,31 @@
-# TIG
-A python library to generate images using open source text to image libraries .
+## pytig
+Generating images from text is a powerful concept.  Algorithms that can generate images from text have applications in education, engineering, game making.  However getting to the image you wanted to generate (output), can be a complicated, multistep process. pytig is python library to generate images from text using open source text to image libraries developed by researchers.
+
+## Purpose
+pytig is for users looking to experiment, research or implement in production, text to to image libaries without the hassle.
 
 
-## What tig does.
+### What pytig does.
 - Accept text as an input and return an image based on a tig maintained library with three inputs. 
     (1) predict text 
     (2) algorithm 
     (3) Process type i.e. CPU or GPU  
 - Automate and Log model runs of tig maintained models.
-- Advanced users can train their own models.
-    - Help in preparing training data for new models.  A model is a trained object that when fed text can generate an image for that text.
+- Help in preparing training data for new models.  A model is a trained object that when fed text can generate an image for that text.
         #### Example 1:
         A model trained on the cub data set (birds)  
-    - Retool tig maintained models for your own use
+- Share amd reproduce algorithms    
+
+### What tig does not do.
+- Supply the compute resources.
 
 
-# What tig does not do.
-- Supply the compute  
+## Major Dependancies
+- guild, spacy, textacy, pandas, pytorch
 
-
-# TIG's Goal
-Allow users to easily generate images for text. For users who simply want to generate an image on a pre-trained modelto image models on  new data sets in To actively maintain various text to image algorithms that can be used for research and commercial applications.
-
-
-##
-
+### Terminology
+- algorithm - A set of rules and processes which output a model
+- model - The algorithm's output which is used to generate the image
 
 - inputs:
     - your train data or use premade example datasets
@@ -36,13 +37,8 @@ Allow users to easily generate images for text. For users who simply want to gen
     -  Image(s)
         -   Example:
 
-# Why?
-Generating images from text is a powerful concept.  Algorithms that can generate images from text have applications in education, engineering, game making.  However getting to the image you wanted to generate (output), can be a complicated, multistep process.
 
 
-
-# Purpose
-To advance the application of image generation models in research and commercial projects.
 
 
 # Current Use Cases
