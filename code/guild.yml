@@ -136,6 +136,7 @@
           - pretrain-train-flags
         delete_captions_pickle:
           description: Force re-create of captions pickle
+          arg-switch: yes
           default: yes
         encoder_lr:
           description: Encoder learning rate
@@ -164,7 +165,6 @@
 
     train:
       description: Train the DAMSM model
-
       main: main
              --cfg cfg/photosynthesis_attn2.yml
              --data_dir photosynthesis
@@ -227,12 +227,14 @@
         $include:
           - common-flags
           - train-predict-flags
-        all-captions:
+        all_captions:
           description: Generate images for all captions
           default: no
+          arg-switch: yes
+          arg-name: b_validation
 
     _check:
       steps:
-        - run: pretrain epochs=1
-        - run: train epochs=1
-        - run: evaluate
+        - run: pretrain epochs=1 --needed
+        - run: train epochs=1 --needed
+        - run: predict

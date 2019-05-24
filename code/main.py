@@ -40,6 +40,8 @@ def parse_args():
     parser.add_argument('--manualSeed', type=int, help='manual seed', default=123)
     parser.add_argument('--b_validation', type=bool)
     parser.add_argument('--batch_size', type=int)
+    parser.add_argument('--train_split', type=float)
+    parser.add_argument('--validation_split', type=float)
 
     # Train params
     parser.add_argument('--predict', action='store_true')
@@ -134,6 +136,12 @@ if __name__ == "__main__":
 
     if args.batch_size is not None:
         cfg.TRAIN.BATCH_SIZE = args.batch_size
+
+    if args.train_split is not None:
+        cfg.TRAIN_SPLIT = args.train_split
+
+    if args.validation_split is not None:
+        cfg.VALIDATION_SPLIT = args.validation_split
 
     if args.data_dir != '':
         cfg.DATA_DIR = args.data_dir
