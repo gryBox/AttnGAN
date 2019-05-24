@@ -14,7 +14,6 @@ __C.DATASET_NAME = 'birds'
 __C.CONFIG_NAME = ''
 __C.DATA_DIR = ''
 __C.OUTPUT_DIR = '../output'
-__C.DELETE_CAPTIONS_PICKLE = True
 __C.TRAIN_SPLIT = 0.9
 __C.VALIDATION_SPLIT = 0.1
 __C.GPU_ID = 0

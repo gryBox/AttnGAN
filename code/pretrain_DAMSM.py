@@ -53,7 +53,7 @@ def parse_args():
     parser.add_argument('--manualSeed', type=int, help='manual seed',default=123)
     parser.add_argument('--batch_size', type=int)
 
-    parser.add_argument('--delete_captions_pickle', type=bool, default=True)
+    parser.add_argument('--delete_captions_pickle', action='store_true')
     parser.add_argument('--train_split', type=float)
     parser.add_argument('--validation_split', type=float)
     # Text arguments
@@ -64,6 +64,7 @@ def parse_args():
     # Train arguments
     parser.add_argument('--snapshot_interval', type=int)
     parser.add_argument('--max_epoch', type=int)
+    parser.add_argument('--snapshot-interval', type=int)
     parser.add_argument('--encoder_lr', type=float)
     parser.add_argument('--rnn_grad_clip', type=float)
     parser.add_argument('--gamma1', type=float)
@@ -255,9 +256,6 @@ if __name__ == "__main__":
     if args.output_dir != '':
         cfg.OUTPUT_DIR = args.output_dir
 
-    # Text Preprocessing args
-    cfg.DELETE_CAPTIONS_PICKLE = args.delete_captions_pickle
-
     if args.train_split is not None:
         cfg.TRAIN_SPLIT = args.train_split
 
@@ -283,6 +281,9 @@ if __name__ == "__main__":
 
     if args.max_epoch is not None:
         cfg.TRAIN.MAX_EPOCH = args.max_epoch
+
+    if args.snapshot_interval is not None:
+        cfg.TRAIN.SNAPSHOT_INTERVAL = args.snapshot_interval
 
     if args.encoder_lr is not None:
         cfg.TRAIN.ENCODER_LR = args.encoder_lr
@@ -314,7 +315,7 @@ if __name__ == "__main__":
     # Preprocess training data
 
     # Process data for a new pretrain mmodel
-    if cfg.DELETE_CAPTIONS_PICKLE:
+    if args.delete_captions_pickle:
         prepareData_files.PrepareDataset_for_ModelTraining(cfg)
 
     ##########################################################################
