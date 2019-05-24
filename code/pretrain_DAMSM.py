@@ -62,6 +62,7 @@ def parse_args():
     parser.add_argument('--words_num', type=int)
 
     # Train arguments
+    parser.add_argument('--snapshot_interval', type=int)
     parser.add_argument('--max_epoch', type=int)
     parser.add_argument('--encoder_lr', type=float)
     parser.add_argument('--rnn_grad_clip', type=float)
@@ -277,6 +278,9 @@ if __name__ == "__main__":
         cfg.TEXT.WORDS_NUM = args.words_num
 
     # Train arguments
+    if args.snapshot_interval is not None:
+        cfg.TRAIN.SNAPSHOT_INTERVAL = args.snapshot_interval
+
     if args.max_epoch is not None:
         cfg.TRAIN.MAX_EPOCH = args.max_epoch
 
