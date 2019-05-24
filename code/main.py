@@ -35,15 +35,16 @@ def parse_args():
                         help='optional config file',
                         default='cfg/bird_attn2.yml', type=str)
     parser.add_argument('--gpu', dest='gpu_id', type=int, default=-1)
-    parser.add_argument('--data_dir', dest='data_dir', type=str, default='')
+    parser.add_argument('--data_dir', default='')
     parser.add_argument('--output_dir', default='')
     parser.add_argument('--manualSeed', type=int, help='manual seed', default=123)
-    parser.add_argument('--b_validation',type=bool)
+    parser.add_argument('--b_validation', type=bool)
     parser.add_argument('--batch_size', type=int)
 
     # Train params
-    parser.add_argument('--train_flag',type=bool)
+    parser.add_argument('--predict', action='store_true')
     parser.add_argument('--max_epoch', type=int)
+    parser.add_argument('--snapshot-interval', type=int)
     parser.add_argument('--net_g', default='')
     parser.add_argument('--b_net_d', type=bool)
     parser.add_argument('--discriminator_lr', type=float)
@@ -52,7 +53,7 @@ def parse_args():
     parser.add_argument('--gamma1', type=float)
     parser.add_argument('--gamma2', type=float)
     parser.add_argument('--gamma3', type=float)
-    parser.add_argument('--lambda_a', type=float) # Renamed to lambda_a from LAMBDA .. keyword parse
+    parser.add_argument('--lambda', dest='lambda_', type=float)
 
     # GAN
     parser.add_argument('--df_dim', type=int)
@@ -144,6 +145,9 @@ if __name__ == "__main__":
     if args.max_epoch is not None:
         cfg.TRAIN.MAX_EPOCH = args.max_epoch
 
+    if args.snapshot_interval is not None:
+        cfg.TRAIN.SNAPSHOT_INTERVAL = args.snapshot_interval
+
     if args.batch_size is not None:
         cfg.TRAIN.BATCH_SIZE = args.batch_size
 
@@ -154,9 +158,8 @@ if __name__ == "__main__":
     if args.b_net_d is not None:
         cfg.TRAIN.B_NET_G = args.b_net_d
 
-    if args.train_flag is not None:
-        cfg.TRAIN.FLAG = args.train_flag
-
+    if args.predict:
+        cfg.TRAIN.FLAG = False
 
     ####
     if args.discriminator_lr is not None:
@@ -177,8 +180,8 @@ if __name__ == "__main__":
     if args.gamma3 is not None:
         cfg.TRAIN.SMOOTH.GAMMA3 = args.gamma3
 
-    if args.lambda_a is not None:
-        cfg.TRAIN.SMOOTH.LAMBDA = args.lambda_a
+    if args.lambda_ is not None:
+        cfg.TRAIN.SMOOTH.LAMBDA = args.lambda_
 
     # GAN
     if args.df_dim is not None:

@@ -53,7 +53,7 @@ def parse_args():
     parser.add_argument('--manualSeed', type=int, help='manual seed',default=123)
     parser.add_argument('--batch_size', type=int)
 
-    parser.add_argument('--delete_captions_pickle', type=bool, default=True)
+    parser.add_argument('--delete_captions_pickle', action='store_true')
     parser.add_argument('--train_split', type=float)
     parser.add_argument('--validation_split', type=float)
     # Text arguments
@@ -254,9 +254,6 @@ if __name__ == "__main__":
     if args.output_dir != '':
         cfg.OUTPUT_DIR = args.output_dir
 
-    # Text Preprocessing args
-    cfg.DELETE_CAPTIONS_PICKLE = args.delete_captions_pickle
-
     if args.train_split is not None:
         cfg.TRAIN_SPLIT = args.train_split
 
@@ -310,7 +307,7 @@ if __name__ == "__main__":
     # Preprocess training data
 
     # Process data for a new pretrain mmodel
-    if cfg.DELETE_CAPTIONS_PICKLE:
+    if args.delete_captions_pickle:
         prepareData_files.PrepareDataset_for_ModelTraining(cfg)
 
     ##########################################################################

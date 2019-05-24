@@ -12,10 +12,12 @@ TREE:
 
 TRAIN:
     FLAG: False
-    NET_G: '../models/phoyosynthesis_AttnGAN2.pth'
+    #NET_G: '../models/phoyosynthesis_AttnGAN2.pth'
+    NET_G: '../output/photosynthesis_glu-gan2_2019_05_22_14_05_51/Model/netG_epoch_0.pth'
     B_NET_D: False
     BATCH_SIZE: 6 # Default 100
-    NET_E: '../DAMSMencoders/photosynthesis/text_encoder200.pth'
+    #NET_E: '../DAMSMencoders/photosynthesis/text_encoder200.pth'
+    NET_E: '../output/photosynthesis_DAMSM_2019_05_22_14_03_57/Model/text_encoder0.pth'
 
 
 GAN:
