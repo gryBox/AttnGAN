@@ -21,7 +21,7 @@ pytig is for users looking to experiment, research or implement in production, t
 
 
 ## Major Dependancies
-- guild, spacy, textacy, pandas, pytorch
+pytig is dependant on large packages for preprocessing text, training and predicting images i.e. guild, spacy, textacy, pandas, pytorch
 
 ### Terminology
 - algorithm - A set of rules and processes which output a model
@@ -59,24 +59,6 @@ pytig is for users looking to experiment, research or implement in production, t
 
 Pytorch implementation for reproducing AttnGAN results in the paper [AttnGAN: Fine-Grained Text to Image Generation
 with Attentional Generative Adversarial Networks](http://openaccess.thecvf.com/content_cvpr_2018/papers/Xu_AttnGAN_Fine-Grained_Text_CVPR_2018_paper.pdf) by Tao Xu, Pengchuan Zhang, Qiuyuan Huang, Han Zhang, Zhe Gan, Xiaolei Huang, Xiaodong He. (This work was performed when Tao was an intern with Microsoft Research).
-
-<img src="framework.png" width="900px" height="350px"/>
-
-
-#### Dependencies
-python 3.6+
-
-Pytorch 1.0+
-
-In addition, please add the project folder to PYTHONPATH and `pip install` the following packages:
-- `python-dateutil`
-- `easydict`
-- `pandas`
-- `torchfile`
-- `nltk`
-- `scikit-image`
-
-
 
 **Data**
 

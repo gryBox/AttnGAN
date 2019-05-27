@@ -1,0 +1,5 @@
+acq-func: gp_hedge
+kappa: 1.96
+noise: gaussian
+random-starts: 0
+xi: 0.01

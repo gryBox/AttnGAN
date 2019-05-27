@@ -145,7 +145,7 @@
           default: 0.0382
         rnn_grad_clip:
           description: RNN gradient clip
-          default: 0.93 #197
+          default: 197
 
         # Uncomment below to override flag defaults for pretrain
         # epochs: 201

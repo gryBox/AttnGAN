@@ -1,0 +1,46 @@
+default-max-trials: 20
+description: '
+
+  Bayesian optimizer using Gaussian processes.
+
+  Refer to https://scikit-optimize.github.io/#skopt.gp_minimize for details on this
+  algorithm and its flags.
+
+  '
+exec: ${python_exe} -um guild.plugins.skopt_gp_main
+flag-encoder: guild.plugins.skopt:encode_flag_for_optimizer
+flags:
+  acq-func:
+    choices:
+    - description: Lower confidence bound
+      value: LCB
+    - description: Negative expected improvement
+      value: EI
+    - description: Negative probability of improvement
+      value: PI
+    - description: Probabilistically use LCB, EI, or PI at every iteration
+      value: gp_hedge
+    - description: Negative expected improvement per second
+      value: EIps
+    - description: Negative probability of improvement per second
+      value: PIps
+    default: gp_hedge
+    description: Function to minimize over the gaussian prior
+  kappa:
+    default: 1.96
+    description: Degree to which variance in the predicted values is taken into account
+    type: float
+  noise:
+    default: gaussian
+    description: 'Level of noise associated with the objective
+
+      Use ''gaussian'' if the objective returns noisy observations, otherwise specify
+      the expected variance of the noise.'
+  random-starts:
+    default: 0
+    description: Number of trials using random values before optimizing
+    type: int
+  xi:
+    default: 0.01
+    description: Improvement to seek over the previous best values
+    type: float
