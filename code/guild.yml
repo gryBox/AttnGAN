@@ -15,13 +15,13 @@
       default: 7
     embedding_dim:
       description: Embedding dimension
-      default: 1024
+      default: 256
     captions_per_image:
       description: Number of captions per image
       default: 1
     words_num:
       description: Number of words per caption
-      default: 244
+      default: 20
 
 - config: pretrain-train-flags
   # Shared across pretrain and train (i.e. training related
@@ -30,7 +30,7 @@
     epochs:
       description: Number of epochs to run
       arg-name: max_epoch
-      default: 201
+      default: 301
     snapshot-interval:
       description: Number of epochs per snapshot
       default: 100
@@ -142,10 +142,10 @@
           default: yes
         encoder_lr:
           description: Encoder learning rate
-          default: 0.0382
+          default: 0.0002
         rnn_grad_clip:
           description: RNN gradient clip
-          default: 0.93 #197
+          default: 0.25 #197
 
         # Uncomment below to override flag defaults for pretrain
         # epochs: 201
@@ -163,7 +163,7 @@
         s_loss: 'valid loss +([0-9\.]+)'
         w_loss: 'valid loss +[0-9\.]+ +([0-9\.]+)'
 
-      objective: w_loss
+      objective: s_loss
 
     train:
       description: Train the DAMSM model

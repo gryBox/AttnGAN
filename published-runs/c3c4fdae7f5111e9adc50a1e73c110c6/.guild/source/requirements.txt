@@ -1,0 +1,10 @@
+# guild: python>=3
+
+PyYAML
+easydict
+nltk
+numpy
+pandas
+pathlib
+scikit-image
+torchvision

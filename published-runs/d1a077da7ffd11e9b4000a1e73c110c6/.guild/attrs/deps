@@ -1,0 +1,4 @@
+config:
+- /home/ec2-user/environment/AttnGAN/code/cfg
+data:
+- /home/ec2-user/environment/AttnGAN/data/photosynthesis

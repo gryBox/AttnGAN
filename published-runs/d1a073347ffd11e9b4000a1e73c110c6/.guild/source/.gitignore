@@ -1,0 +1,4 @@
+*.pyc
+!.gitignore
+code/*.pyc
+code/miscc/*.pyc

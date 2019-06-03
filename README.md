@@ -1,8 +1,23 @@
 ## pytig
-Generating images from text is a powerful concept.  Algorithms that can generate images from text have applications in education, engineering, game making.  However getting to the image you wanted to generate (output), can be a complicated, multistep process. pytig is python library to generate images from text using open source text to image libraries developed by researchers.
+pytig is a python library for users looking to experiment, research or implement in production, text to image libaries without the hassle.  In addition it is a place for contributors to upgrade the algorithm(s) supported by pytig.
 
-## Purpose
-pytig is for users looking to experiment, research or implement in production, text to to image libaries without the hassle.
+## Motivation
+Programmatically generating images from text is a powerful concept with many practical applications in numerous fields sucha as education, engineering, game making. However in practice using these algorithms to generate images can be a difficult multi-step process i.e. (AttmGAN)[AttnGAN: Fine-Grained Text to Image Generation
+with Attentional Generative Adversarial Networks] 
+
+## Usage
+`pip install pytig`
+
+`import pytig as tig
+
+#test
+# No GPU required
+img = tig.generate("photosythnesis is a process", model='test' )
+
+#bird
+#coco`
+
+
 
 
 ### What pytig does.

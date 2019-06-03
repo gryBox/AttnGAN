@@ -1,0 +1,52 @@
+background: false
+disable_plugins: null
+flags:
+- batch_size=7
+- captions_per_image=1
+- delete_captions_pickle=yes
+- embedding_dim=315
+- encoder_lr=0.5403479905994714
+- epochs=201
+- gamma1=266.11240471626513
+- gamma2=36.214669694009814
+- gamma3=65.20761750941752
+- gpu=0
+- rnn_grad_clip=0.3285762730362172
+- snapshot-interval=100
+- train_split=1.0
+- validation_split=1.0
+- words_num=166
+force_flags: false
+gpus: null
+help_model: false
+help_op: false
+init_trials: false
+label: pretrain batch_size=7 captions_per_image=1 delete_captions_pickle=yes embedding_dim=315
+  encoder_lr=0.5403 epochs=201 gamma1=266.1124 gamma2=36.2147 gamma3=65.2076 gpu=0
+  rnn_grad_clip=0.3286 snapshot-interval=100 train_split=1.0 validation_split=1.0
+  words_num=166
+max_trials: 21
+maximize: null
+minimize: null
+needed: false
+no_gpus: false
+no_wait: false
+opspec: damsm:pretrain
+opt_flags: []
+optimize: false
+optimizer: null
+pidfile: null
+print_cmd: false
+print_env: false
+print_trials: false
+quiet: false
+random_seed: 867874346
+remote: null
+rerun: null
+restart: c3c4fd2c7f5111e9adc50a1e73c110c6
+run_dir: null
+save_trials: null
+set_trace: false
+stage: null
+stop_after: null
+'yes': true

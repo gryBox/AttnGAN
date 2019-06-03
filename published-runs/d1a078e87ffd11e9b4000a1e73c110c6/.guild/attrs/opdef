@@ -1,0 +1,25 @@
+description: Pretrain the DAMSM model
+flags:
+  $include:
+  - common-flags
+  - pretrain-train-flags
+  delete_captions_pickle:
+    arg-switch: true
+    default: true
+    description: Force re-create of captions pickle
+  encoder_lr:
+    default: 0.0382
+    description: Encoder learning rate
+  rnn_grad_clip:
+    default: 197
+    description: RNN gradient clip
+flags-import: false
+main: pretrain_DAMSM --data_dir photosynthesis --output_dir output --cfg cfg/DAMSM/photosynthesis.yml
+objective: w_loss
+output-scalars:
+- s_loss: valid loss +([0-9\.]+)
+  step: end epoch +([0-9]+)
+  w_loss: valid loss +[0-9\.]+ +([0-9\.]+)
+requires:
+- config
+- data

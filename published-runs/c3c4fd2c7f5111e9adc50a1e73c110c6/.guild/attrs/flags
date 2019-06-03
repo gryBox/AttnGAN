@@ -1,0 +1,15 @@
+batch_size: 7
+captions_per_image: 1
+delete_captions_pickle: true
+embedding_dim: 315
+encoder_lr: 0.5403479905994714
+epochs: 201
+gamma1: 266.11240471626513
+gamma2: 36.214669694009814
+gamma3: 65.20761750941752
+gpu: 0
+rnn_grad_clip: 0.3285762730362172
+snapshot-interval: 100
+train_split: 1.0
+validation_split: 1.0
+words_num: 166
