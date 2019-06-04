@@ -6,14 +6,14 @@ with Attentional Generative Adversarial Networks](http://openaccess.thecvf.com/c
 ## Usage
 `pip install pytig`
 
-`import pytig as tig
+    import pytig as tig
 
-#test
-# No GPU required
-img = tig.generate("photosythnesis is a process", model='test' )
+    #test
+    # No GPU required
+    img = tig.generate("photosythnesis is a process", model='test' )
 
-#bird
-#coco`
+    #bird
+    #coco
 
 
 
