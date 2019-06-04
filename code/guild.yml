@@ -21,7 +21,7 @@
       default: 1
     words_num:
       description: Number of words per caption
-      default: 20
+      default: 15
 
 - config: pretrain-train-flags
   # Shared across pretrain and train (i.e. training related
@@ -33,7 +33,7 @@
       default: 301
     snapshot-interval:
       description: Number of epochs per snapshot
-      default: 100
+      default: 300
     train_split:
       description: Ratio of data used for training
       default: 1.0
@@ -42,13 +42,13 @@
       default: 1.0
     gamma1:
       description: Smooth gamma1
-      default: 168.6969
+      default: 4.0
     gamma2:
       description: Smooth gamma2
-      default: 51.1301
+      default: 5.0
     gamma3:
       description: Smooth gamma3
-      default: 26.8084
+      default: 10.0
 
 - config: train-predict-flags
   flags:
@@ -235,6 +235,11 @@
           arg-switch: yes
           arg-name: b_validation
 
+    _all:
+      steps:
+        - run: pretrain --needed
+        - run: train --needed
+        - run: predict
     _check:
       steps:
         - run: pretrain epochs=1 --needed

@@ -1,9 +1,7 @@
 ## pytig
-pytig is a python library for users looking to experiment, research or implement in production, text to image libaries without the hassle.  In addition it is a place for contributors to upgrade the algorithm(s) supported by pytig.
 
-## Motivation
-Programmatically generating images from text is a powerful concept with many practical applications in numerous fields sucha as education, engineering, game making. However in practice using these algorithms to generate images can be a difficult multi-step process i.e. (AttmGAN)[AttnGAN: Fine-Grained Text to Image Generation
-with Attentional Generative Adversarial Networks] 
+Programmatically generating images from text is a powerful concept with many practical applications in numerous fields such as education, engineering, game making. However in practice using these algorithms to generate images can be a difficult multi-step process i.e. [AttnGAN: Fine-Grained Text to Image Generation
+with Attentional Generative Adversarial Networks](http://openaccess.thecvf.com/content_cvpr_2018/papers/Xu_AttnGAN_Fine-Grained_Text_CVPR_2018_paper.pdf) by Tao Xu, Pengchuan Zhang, Qiuyuan Huang, Han Zhang, Zhe Gan, Xiaolei Huang, Xiaodong He. (This work was performed when Tao was an intern with Microsoft Research).
 
 ## Usage
 `pip install pytig`
@@ -72,8 +70,7 @@ pytig is dependant on large packages for preprocessing text, training and predic
 # TIG Maintainad Algorithms
 ### AttnGAN
 
-Pytorch implementation for reproducing AttnGAN results in the paper [AttnGAN: Fine-Grained Text to Image Generation
-with Attentional Generative Adversarial Networks](http://openaccess.thecvf.com/content_cvpr_2018/papers/Xu_AttnGAN_Fine-Grained_Text_CVPR_2018_paper.pdf) by Tao Xu, Pengchuan Zhang, Qiuyuan Huang, Han Zhang, Zhe Gan, Xiaolei Huang, Xiaodong He. (This work was performed when Tao was an intern with Microsoft Research).
+Pytorch implementation for reproducing AttnGAN results in the paper 
 
 **Data**
 
