@@ -1,7 +1,35 @@
 ## pytig
 
-Programmatically generating images from text is a powerful concept with many practical applications in numerous fields such as education, engineering, game making. However in practice using these algorithms to generate images can be a difficult multi-step process i.e. [AttnGAN: Fine-Grained Text to Image Generation
-with Attentional Generative Adversarial Networks](http://openaccess.thecvf.com/content_cvpr_2018/papers/Xu_AttnGAN_Fine-Grained_Text_CVPR_2018_paper.pdf) by Tao Xu, Pengchuan Zhang, Qiuyuan Huang, Han Zhang, Zhe Gan, Xiaolei Huang, Xiaodong He. (This work was performed when Tao was an intern with Microsoft Research).
+pytig is a python library to automatically generate images from text with a few commands using open source TIG's (text to image generation) algorithms. 
+
+    import pytig as tig
+    
+    tig.download.datasets(name=['bird'])
+    Bird = tig.generate("photosythnesis is a process", model='bird' )
+    Bird.img.show()
+   
+   ![alt text](example_bird.PNG)
+
+Traditionally TIG's are often developed by researchers, hoping to be published.  Once a paper is published, the algorithms are no longer maintained. Making it difficult for hobbyists, other researchers and engineers to replicate, experiment, and implement in production.
+
+## Things you need to know before you install
+1. Greater tham 4 GB of disk space for all the training data and various models.
+2. python 3.6+
+3. Time and patience.  It all depends on your machine but in general things run in minutes and hours not seconds.
+
+
+
+
+
+TThe library facilates generating images fro text  using text to image generation algorithms (TIG's) developed by resea 
+
+
+
+
+
+
+Programmatically generating images from text is a powerful concept with many practical applications in numerous fields such as education, engineering, game making. However in practice using these algorithms to generate images can be difficult i.e. [AttnGAN: Fine-Grained Text to Image Generation
+with Attentional Generative Adversarial Networks](http://openaccess.thecvf.com/content_cvpr_2018/papers/Xu_AttnGAN_Fine-Grained_Text_CVPR_2018_paper.pdf). The primary reasons are (1) Reseaserchers often write the code for the lab algorithms are written by researchers  
 
 ## Usage
 `pip install pytig`
