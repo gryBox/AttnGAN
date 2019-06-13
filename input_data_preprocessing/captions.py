@@ -7,6 +7,7 @@ import textacy
 import numpy as np
 import en_core_web_sm
 
+import input_data_preprocessing as idp
 
 import logging
 
@@ -14,14 +15,72 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 
-def reshape_corpus_captions():
+class ReshapeImageLabels():
     """
-    Reshape all the image labels to be of the same number.
-    TODO: Filter captions by similarity or information or length
+    Reshape all the image labels to have the same number of captions while trying maintain an even  num of characters per caption.
     """
+    def __init__(self, captionsCorpus):
+
+        # Input - A Spacy corpus of texts corresponding to a set of images
+        logging.info(f"Input Corpus: {captionsCorpus}")
+
+        # 1  Calculate corpus stats
+        self.corpusStats = idp.corpus_stats.CorpusStats(captionsCorpus)
+
+        # 2  Extract the shortest doc from a corpus
+        self.shortestDoc = idp.utils.find_shortest_doc(captionsCorpus, self.corpusStats.min_tokens)
+
+        # 3  Maximize the shortest doc captions and return a list of captions greater than entered
+        self.shortestDocCaptions = MaximizeDocCaptions(self.shortestDoc)
+
+        # 4  Reshape all the image labels to have the same number of captions while trying maintain an even
+        self.image_label_list = self.shape_text_captions(captionsCorpus, self.shortestDocCaptions.num_of_captions)
 
 
-    return
+    def shape_text_captions(self, captionsCorpus, max_captions):
+        """
+        Reshape all the image labels to be of the same number of rows, with an attempt keep the number of characters the same for each image.
+        TODO: Filter captions by similarity or information or length
+        """
+        corpus_captions_lst = list()
+        to_shortDocs_lst = list()
+
+        # d. Loop over corpus and re-size labels to the max captions i.e ideally split by sentences
+        for docidx, doc in enumerate(captionsCorpus):
+            logging.debug(f"New doc in Corpus Resizing Image Caption {docidx}")
+            image_captions_lst = list()
+            # Check if the doc the labaels need to be minimized or expanded
+            if doc._.n_sents==max_captions:
+
+                # Split sents into captions and noramlize text i.e lowercase everything.
+                image_captions_lst = [normalize_caption_text(sent.text) for sent in doc.sents]
+
+            elif doc._.n_sents<max_captions:
+
+                # Maximize the captions per image
+                maxedCaptions = MaximizeDocCaptions(doc)
+
+                # Check that maxed captions list is not larger than the max captions allowed from the shortest doc
+                if len(maxedCaptions.captions_lst)>max_captions:
+
+                    # Minimize the new reshaped captions to the proper number of captions i.e. max captions
+                    minnedCaptions = MinimizeDocCaptions(maxedCaptions.captions_lst, max_captions)
+                    image_captions_lst = minnedCaptions.captions_lst
+                else:
+                    image_captions_lst = maxedCaptions.captions_lst
+
+            elif doc._.n_sents>max_captions:
+
+                # Split sentences into list  before munging
+                captions_lst = [sent.text for sent in doc.sents]
+
+                minnedCaptions = MinimizeDocCaptions(captions_lst, max_captions)
+                image_captions_lst = minnedCaptions.captions_lst
+
+            logging.debug(f"Final Number of captions per image: {len(image_captions_lst)}")
+            corpus_captions_lst.append(image_captions_lst)
+
+        return corpus_captions_lst
 
 
 class MaximizeDocCaptions():
@@ -32,8 +91,8 @@ class MaximizeDocCaptions():
     """
     def __init__(self, doc):
 
-        self.caption_lst = self.maximize_captions(doc)
-        self.num_of_captions = self.number_of_captions(self.caption_lst)
+        self.captions_lst = self.maximize_captions(doc)
+        self.num_of_captions = self.number_of_captions(self.captions_lst)
         logging.info(f"MaximizeDocCaptions - Number of captions {self.num_of_captions}")
 
     def maximize_captions(self, doc):
@@ -82,12 +141,14 @@ class MinimizeDocCaptions():
     Notes:
 
     """
-    def __init__(self, captions_df, max_captions, normalize_text=True, captions_clm_name="captions"):
+    def __init__(self, captions_lst, max_captions, normalize_text=True, captions_clm_name="captions"):
 
         # Max captions for the whole corpus
         self.max_captions = max_captions
 
         self.captions_clm_name = captions_clm_name
+
+        captions_df = idp.utils.txt_to_df(captions_lst, captions_clm_name=captions_clm_name)
 
         if normalize_text:
             captions_df[captions_clm_name] = captions_df[captions_clm_name].apply(normalize_caption_text)
@@ -127,7 +188,7 @@ class MinimizeDocCaptions():
                     remainder_captions_str = captions_df[self.captions_clm_name].str.cat(sep=' ')
                     caption_str = f"{caption_str} {remainder_captions_str}"
 
-                print(f"Number of characters per captions: {len(caption_str)}")
+                logging.debug(f"Number of characters per captions: {len(caption_str)}")
                 captions_list.append(caption_str)
 
         return captions_list
