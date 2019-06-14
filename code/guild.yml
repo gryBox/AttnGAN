@@ -235,12 +235,15 @@
           arg-switch: yes
           arg-name: b_validation
 
-    _all:
+    all:
+      description: Run the pipeline end-to-end
       steps:
         - run: pretrain --needed
         - run: train --needed
         - run: predict
-    _check:
+
+    check:
+      description: Quick check used to confirm pipeline is working
       steps:
         - run: pretrain epochs=1 --needed
         - run: train epochs=1 --needed
