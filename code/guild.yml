@@ -79,10 +79,12 @@
       sources:
         - file: cfg
 
-    data:
+    data-photosynthesis:
       description: Path to data used for training and test.
       sources:
-        - file: ../data/photosynthesis
+        - url: https://github.com/gryBox/pytig-data/raw/master/photosynthesis_raw/photosynthesis.zip
+          sha256: dffe12c931570eed15436181908bf998e9f2068554fd6cd584f444dc1785caa7
+
         # - captions_pickle
 
 ######## Incorporate into the next section for readability
@@ -119,23 +121,38 @@
             repl: ''
 #####################################################
   operations:
+    prepare-data:
+      description: Prepare a dats set for training
+      main: prepare_data
+      flags:
+        data-dir:
+          description: Location of data to process
+          required: yes
+
     pretrain:
       description: Pretrain the DAMSM model
 
       main: pretrain_DAMSM
-             --data_dir photosynthesis
+             --data_dir ${dataset}
+             --cfg cfg/DAMSM/${dataset}.yml
              --output_dir output
-             --cfg cfg/DAMSM/photosynthesis.yml
 
       requires:
         - config
-        - data
+        - data-${dataset}
 
       flags-import: no
       flags:
         $include:
           - common-flags
           - pretrain-train-flags
+        dataset:
+          description: Dataset to pretrain
+          choices:
+            - photosynthesis
+            - birds
+          arg-skip: yes
+          required: yes
         delete_captions_pickle:
           description: Force re-create of captions pickle
           arg-switch: yes
@@ -235,12 +252,15 @@
           arg-switch: yes
           arg-name: b_validation
 
-    _all:
+    all:
+      description: Run the pipeline end-to-end
       steps:
         - run: pretrain --needed
         - run: train --needed
         - run: predict
-    _check:
+
+    check:
+      description: Quick check used to confirm pipeline is working
       steps:
         - run: pretrain epochs=1 --needed
         - run: train epochs=1 --needed
