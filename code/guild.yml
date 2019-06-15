@@ -79,7 +79,7 @@
       sources:
         - file: cfg
 
-    data:
+    data-photosynthesis:
       description: Path to data used for training and test.
       sources:
         - url: https://github.com/gryBox/pytig-data/raw/master/photosynthesis_raw/photosynthesis.zip
@@ -121,23 +121,38 @@
             repl: ''
 #####################################################
   operations:
+    prepare-data:
+      description: Prepare a dats set for training
+      main: prepare_data
+      flags:
+        data-dir:
+          description: Location of data to process
+          required: yes
+
     pretrain:
       description: Pretrain the DAMSM model
 
       main: pretrain_DAMSM
-             --data_dir photosynthesis
+             --data_dir ${dataset}
+             --cfg cfg/DAMSM/${dataset}.yml
              --output_dir output
-             --cfg cfg/DAMSM/photosynthesis.yml
 
       requires:
         - config
-        - data
+        - data-${dataset}
 
       flags-import: no
       flags:
         $include:
           - common-flags
           - pretrain-train-flags
+        dataset:
+          description: Dataset to pretrain
+          choices:
+            - photosynthesis
+            - birds
+          arg-skip: yes
+          required: yes
         delete_captions_pickle:
           description: Force re-create of captions pickle
           arg-switch: yes
