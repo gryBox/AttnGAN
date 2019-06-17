@@ -183,8 +183,7 @@ class TextDataset(data.Dataset):
                     if cnt == self.embeddings_num:
                         break
                 if cnt < self.embeddings_num:
-                    print('ERROR: the captions for %s less than %d'
-                          % (filenames[i], cnt))
+                    print(f"ERROR: the captions for {filenames[i]} less than {cnt}")
         return all_captions
 
     def build_dictionary(self, train_captions, test_captions):
