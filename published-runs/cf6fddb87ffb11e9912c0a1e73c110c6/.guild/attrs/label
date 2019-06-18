@@ -1,4 +1,0 @@
-gp batch_size=7 captions_per_image=1 delete_captions_pickle=yes embedding_dim=245
-  encoder_lr=0.6534 epochs=201 gamma1=274.8357 gamma2=727.1304 gamma3=56.6002 gpu=0
-  rnn_grad_clip=0.1074 snapshot-interval=100 train_split=1.0 validation_split=1.0
-  words_num=85

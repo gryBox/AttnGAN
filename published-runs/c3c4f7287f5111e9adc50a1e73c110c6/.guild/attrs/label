@@ -1,4 +1,0 @@
-pretrain batch_size=7 captions_per_image=1 delete_captions_pickle=yes embedding_dim=411
-  encoder_lr=0.9136 epochs=201 gamma1=248.9432 gamma2=156.9811 gamma3=93.6775 gpu=0
-  rnn_grad_clip=0.1222 snapshot-interval=100 train_split=1.0 validation_split=1.0
-  words_num=158
