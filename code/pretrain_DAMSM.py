@@ -314,9 +314,11 @@ if __name__ == "__main__":
     ##########################################################################
     # Preprocess training data
 
-    # Process data for a new pretrain mmodel
+    # Delete Captions pickle. Gets recreated when deleted with new captions
     if args.delete_captions_pickle:
-        prepareData_files.PrepareDataset_for_ModelTraining(cfg)
+        pickleflpth = os.path.abspath(cfg.data_dir)
+        ## Captions pickle name needs to e made into an argument
+        os.remove(os.path.join(pickleflpth,'captions.pickle'))
 
     ##########################################################################
     if cfg.CUDA:
