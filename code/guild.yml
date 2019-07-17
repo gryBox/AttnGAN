@@ -184,6 +184,7 @@
         epochs: null
         pretrain_batch_size: null
         train_batch_size: null
+        eval_batch_size: null
       steps:
         - run: pretrain
                epochs=${epochs}
@@ -191,7 +192,8 @@
         - run: train
                epochs=${epochs}
                batch_size=${train_batch_size}
-        - run: predict
+        - run: evaluate
+               batch_size=${eval_batch_size}
 
     check:
       description: Quick check to verify AttnGAN pipeline
