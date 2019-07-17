@@ -1,3 +1,10 @@
+# Notes:
+#
+# - Add shared flags for dataset support
+# - Default to photosynthesis dataset
+# - Get sys stats working for TB (nice to have)
+# - Output scalars not showing up in View
+
 - config: common-flags
   flags:
     gpu:
@@ -107,17 +114,17 @@
           select-max:
             - '.+/Model/netG_epoch_([0-9]+).pth'
           rename:
-            pattern: _epoch_[0-9]
+            pattern: _epoch_[0-9]+
             repl: ''
 
   operations:
-    prepare-data:
-      description: Prepare a dats set for training
-      main: prepare_data
-      flags:
-        data-dir:
-          description: Location of data to process
-          required: yes
+    #prepare-data:
+    #  description: Prepare a dats set for training
+    #  main: prepare_data
+    #  flags:
+    #    data-dir:
+    #      description: Location of data to process
+    #      required: yes
 
     pretrain:
       description: Pretrain the DAMSM model
@@ -182,7 +189,7 @@
 
       requires:
         - cfg
-        - data
+        - data-${dataset}
         - pretrained-model
 
       flags-import: no
@@ -191,6 +198,13 @@
           - common-flags
           - pretrain-train-flags
           - train-predict-flags
+        dataset:
+          description: Dataset to pretrain
+          choices:
+            - photosynthesis
+            - birds
+          arg-skip: yes
+          required: yes
         discriminator_lr:
           description: Discriminator learning rate
           default: 0.0002
@@ -227,7 +241,7 @@
 
       requires:
         - cfg
-        - data
+        - data-${dataset}
         - pretrained-model
         - trained-model
 
@@ -236,6 +250,13 @@
         $include:
           - common-flags
           - train-predict-flags
+        dataset:
+          description: Dataset to pretrain
+          choices:
+            - photosynthesis
+            - birds
+          arg-skip: yes
+          required: yes
         all_captions:
           description: Generate images for all captions
           default: no
