@@ -5,13 +5,18 @@ with Attentional Generative Adversarial Networks](http://openaccess.thecvf.com/c
 
 <img src="framework.png" width="900px" height="350px"/>
 
-### Fork Features
+### Fork Features and Notes
+
     - python 3.6 (originally merged from https://github.com/davidstap/AttnGAN)
     - Full exposure to the authors pretrain, train and evaluate/predict arguments through the command line.
-    - guild file to run and benchmark algorithm runs (pretrain, train, eval) as a program.
-
-
-
+    - `guild.yml` file to run and benchmark algorithm runs (pretrain, train, eval) as a program.
+        - See [guild.ai (open source)](https://guild.ai/) for full feature set.
+    - Feature and pull requests welcomed. Specifically
+        - Implement `logging` throughought the original authors codebase - Beginner
+        - Replace nltk with [`textacy`](https://chartbeat-labs.github.io/textacy/) - Intermediate
+        - Implement `dask dataframe`, `dask delayed` and `dask-ml` [dask](https://docs.dask.org/en/latest/)- Intermediate
+        - Expand the number of datasets that the algorithm can accept by allowing for  variable `CAPTIONS_PER_IMAGE` i.e removing it as an algorith,e requirement - Expert
+        - Documentation - All levels
 
 ### Dependencies
 python 3.6
