@@ -27,8 +27,8 @@
     data-photosynthesis:
       description: Path to data used for training and test.
       sources:
-        - url: https://github.com/gryBox/pytig-data/raw/master/photosynthesis_raw.zip
-          sha256: 79380035f699ac44a74086cf8cefb10d07a804376b2788f478f47215f310bd1f
+        - url: https://guild-pub.s3.amazonaws.com/photosynthesis.zip
+          sha256: dffe12c931570eed15436181908bf998e9f2068554fd6cd584f444dc1785caa7
 
     pretrained-model:
       description:
