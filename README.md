@@ -14,11 +14,11 @@ with Attentional Generative Adversarial Networks](http://openaccess.thecvf.com/c
 
 
 - Feature and pull requests welcomed. Specifically
-    - Implement `logging` throughought the original authors codebase - Beginner
-    - Replace nltk with [`textacy`](https://chartbeat-labs.github.io/textacy/) - Intermediate
-    - Implement `dask dataframe`, `dask delayed` and `dask-ml` [dask](https://docs.dask.org/en/latest/)- Intermediate
+    - Implement `logging` throughought the original authors codebase - _Beginner_
+    - Replace nltk with [`textacy`](https://chartbeat-labs.github.io/textacy/) - _Intermediate_
+    - Implement `dask dataframe`, `dask delayed` and `dask-ml` [dask](https://docs.dask.org/en/latest/)- _Intermediate_
     - Expand the number of datasets that the algorithm can accept by allowing for  variable `CAPTIONS_PER_IMAGE` i.e removing it as an algorith,e requirement - Expert
-    - Documentation - All levels
+    - Documentation - _All levels_
 
 ### Dependencies
 python 3.6
