@@ -4,7 +4,7 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y \
     python-pip \
-    python2.7 \
+    python3.6 \
     && apt-get autoremove \
     && apt-get clean
 
@@ -24,6 +24,6 @@ ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 ENV GPU True
 ENV EXPORT_MODEL False
 
-EXPOSE 8080
+EXPOSE 8081
 
 CMD ["python", "main.py"]
