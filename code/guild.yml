@@ -1,11 +1,9 @@
-# Notes:
-#
-# - Add shared flags for dataset support
-# - Default to photosynthesis dataset
-# - Get sys stats working for TB (nice to have)
-# - Output scalars not showing up in View
+# -------------------------------------------------------------------
+# Shared flags
+# -------------------------------------------------------------------
 
 - config: common-flags
+  description: Commonly used flags across operations
   flags:
     gpu:
       description: Index of CUDA device to run operation on
@@ -23,9 +21,20 @@
       description: Number of words per caption
       default: 15
 
+- config: dataset-flags
+  description: Flags used by data set dependent operations
+  flags:
+    dataset:
+      description: Dataset to pretrain
+      default: photosynthesis
+      choices:
+        - photosynthesis
+        - birds
+      arg-skip: yes
+      required: yes
+
 - config: pretrain-train-flags
-  # Shared across pretrain and train (i.e. training related
-  # operations)
+  description: Flags used by both pretrain and train
   flags:
     epochs:
       description: Number of epochs to run
@@ -51,6 +60,7 @@
       default: 10.0
 
 - config: train-predict-flags
+  description: Flags used by both train and predict
   flags:
     df_dim:
       description: DF dimension
@@ -65,10 +75,19 @@
       description: R
       default: 3
 
-- model: damsm
-  description: Deep Attentional Multimodal Similarity Model (DAMSM)
+# -------------------------------------------------------------------
+# AttnGAN
+# -------------------------------------------------------------------
 
-  resources: # Files required by operations
+- model: attngan
+  description: Fine-Grained Text to Image Generation with Attentional
+               Generative Adversarial Networks
+
+  # -----------------------------------------------------------------
+  # AttnGAN resources
+  # -----------------------------------------------------------------
+
+  resources:
     cfg:
       description:
         Path to project configuration files.
@@ -118,38 +137,26 @@
             repl: ''
 
   operations:
-    #prepare-data:
-    #  description: Prepare a dats set for training
-    #  main: prepare_data
-    #  flags:
-    #    data-dir:
-    #      description: Location of data to process
-    #      required: yes
+
+    # ---------------------------------------------------------------
+    # AttnGAN pretrain
+    # ---------------------------------------------------------------
 
     pretrain:
       description: Pretrain the DAMSM model
-
       main: pretrain_DAMSM
              --data_dir ${dataset}
              --cfg cfg/DAMSM/${dataset}.yml
              --output_dir output
-
       requires:
         - cfg
         - data-${dataset}
-
       flags-import: no
       flags:
         $include:
           - common-flags
+          - dataset-flags
           - pretrain-train-flags
-        dataset:
-          description: Dataset to pretrain
-          choices:
-            - photosynthesis
-            - birds
-          arg-skip: yes
-          required: yes
         delete_captions_pickle:
           description: Force re-create of captions pickle
           arg-switch: yes
@@ -160,24 +167,15 @@
         rnn_grad_clip:
           description: RNN gradient clip
           default: 0.25 #197
-
-        # Uncomment below to override flag defaults for pretrain
-        # epochs: 201
-        # gamma1: 72.4953
-        # gamma2: 65.3585
-        # gamma3: 89.2507
-        # encoder_lr: 0.003189
-        # embedding_dim: 128
-        # rnn_grad_clip: 2.0
-        # captions_per_image: 1
-        # words_num: 244
-
       output-scalars:
         step: 'end epoch +([0-9]+)'
         s_loss: 'valid loss +([0-9\.]+)'
         w_loss: 'valid loss +[0-9\.]+ +([0-9\.]+)'
-
       objective: s_loss
+
+    # ---------------------------------------------------------------
+    # AttnGAN pretrain
+    # ---------------------------------------------------------------
 
     train:
       description: Train the DAMSM model
@@ -186,25 +184,17 @@
              --data_dir photosynthesis
              --net_e nets/text_encoder.pth
              --output_dir output
-
       requires:
         - cfg
         - data-${dataset}
         - pretrained-model
-
       flags-import: no
       flags:
         $include:
           - common-flags
+          - dataset-flags
           - pretrain-train-flags
           - train-predict-flags
-        dataset:
-          description: Dataset to pretrain
-          choices:
-            - photosynthesis
-            - birds
-          arg-skip: yes
-          required: yes
         discriminator_lr:
           description: Discriminator learning rate
           default: 0.0002
@@ -214,7 +204,6 @@
         lambda:
           description: Lambda
           default: 50
-
       output-scalars:
         step: 'Step: ([0-9]+)'
         errD0: 'errD0: (\S+)'
@@ -226,8 +215,11 @@
         w_loss: 'w_loss: (\S+)'
         s_loss: 's_loss: (\S+)'
         kl_loss: 'kl_loss: (\S+)'
-
       objective: w_loss
+
+    # ---------------------------------------------------------------
+    # AttnGAN pretrain
+    # ---------------------------------------------------------------
 
     predict:
       description: Predict on trained model
@@ -238,41 +230,43 @@
              --net_e nets/text_encoder.pth
              --net_g nets/netG.pth
              --output_dir output
-
       requires:
         - cfg
         - data-${dataset}
         - pretrained-model
         - trained-model
-
       flags-import: no
       flags:
         $include:
           - common-flags
+          - dataset-flags
           - train-predict-flags
-        dataset:
-          description: Dataset to pretrain
-          choices:
-            - photosynthesis
-            - birds
-          arg-skip: yes
-          required: yes
         all_captions:
           description: Generate images for all captions
           default: no
           arg-switch: yes
           arg-name: b_validation
 
+    # ---------------------------------------------------------------
+    # AttnGAN workflow
+    # ---------------------------------------------------------------
+
     all:
       description: Run the pipeline end-to-end
+      flags:
+        epochs: null
+        pretrain_batch_size: null
+        train_batch_size: null
       steps:
-        - run: pretrain --needed
-        - run: train --needed
+        - run: pretrain
+               epochs=${epochs}
+               batch_size=${pretrain_batch_size}
+        - run: train
+               epochs=${epochs}
+               batch_size=${train_batch_size}
         - run: predict
 
     check:
-      description: Quick check used to confirm pipeline is working
+      description: Quick check to verify pipeline
       steps:
-        - run: pretrain epochs=1 --needed
-        - run: train epochs=1 --needed
-        - run: predict
+        - run: all epochs=1
